@@ -1,0 +1,296 @@
+
+<!-- icon list--><!DOCTYPE html>
+<html class="wide wow-animation" lang="en">
+  <head>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  </head>
+  <body>
+  
+    <!-- Page-->
+    
+      <!-- Page preloader-->
+      <!--<div class="page-loader">-->
+        
+      </div>
+      <!-- Page Header-->
+      <header class="page-header" style="padding-bottom: 24px">
+        <!-- RD Navbar-->
+        <div class="rd-navbar-wrap">
+          <nav class="rd-navbar rd-navbar-default-with-top-panel" data-layout="rd-navbar-fixed" data-sm-layout="rd-navbar-fixed" data-md-layout="rd-navbar-fullwidth" data-md-device-layout="rd-navbar-fixed" data-lg-layout="rd-navbar-fullwidth" data-lg-device-layout="rd-navbar-fullwidth" data-md-stick-up-offset="90px" data-lg-stick-up-offset="150px" data-stick-up="true" data-sm-stick-up="true" data-md-stick-up="true" data-lg-stick-up="true">
+            <div class="rd-navbar-top-panel rd-navbar-collapse">
+              <div class="rd-navbar-top-panel-inner">
+                
+                <div class="center-side">
+                  <!-- RD Navbar Brand-->
+                  <div class="rd-navbar-brand fullwidth-brand"><a class="brand-name" href="index.html"><img src="images/oca.jpg" alt="" width="100" height="100"/></a></div>
+                </div>
+                <?php
+                        require_once('DBconnect.php');
+                        $sel= "select * from clubs";
+                        $query= mysqli_query($conn, $sel);
+                        $resul= mysqli_fetch_assoc($query);
+
+
+?>
+                <div class="right-side">
+                  <!-- User Info-->
+                  <div class="contact-info">
+                    <div class="unit unit-middle unit-horizontal unit-spacing-xs">
+                      <div class="unit__left"><span class="icon icon-primary text-middle mdi mdi-phone"> </span></div>
+                      <div class="unit__body"><a class="text-middle" href="#"><?php echo $resul['Club Name']; ?></a></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="rd-navbar-inner">
+              <!-- RD Navbar Panel-->
+              <div class="rd-navbar-panel">
+                <!-- RD Navbar Toggle-->
+                <button class="rd-navbar-toggle" data-rd-navbar-toggle=".rd-navbar-nav-wrap"><span></span></button>
+                <!-- RD Navbar collapse toggle-->
+                <button class="rd-navbar-collapse-toggle" data-rd-navbar-toggle=".rd-navbar-collapse"><span></span></button>
+                <!-- RD Navbar Brand-->
+                
+              </div>
+              <div class="rd-navbar-aside-right">
+                <div class="rd-navbar-nav-wrap">
+                  <div class="rd-navbar-nav-scroll-holder">
+                    <ul class="rd-navbar-nav">
+                      <li class="active"><a href="index.html">Home</a>
+                      </li>
+                      <li><a href="about-us.html">About Us</a>
+                      </li>
+                      <li><a href="contacts.html">Contacts</a>
+                      </li>
+                      <li><a href="typography.html">Typography</a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </nav>
+        </div>
+      </header>
+      <section class="section">
+        <div class="shell-wide">
+          <div class="range range-30 range-xs-center">
+            <div class="container emp-profile">
+                <form method="post">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="profile-img">
+                                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS52y5aInsxSm31CvHOFHWujqUx_wWTS9iM6s7BAm21oEN_RiGoog" alt=""/>
+                                <div class="file btn btn-lg btn-primary">
+                                    Change Photo
+                                    <input type="file" name="file"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="profile-head">
+                                        <h5>
+                                            Kshiti Ghelani
+                                        </h5>
+                                        <h6>
+                                            Web Developer and Designer
+                                        </h6>
+                                        <p class="proile-rating">RANKINGS : <span>8/10</span></p>
+                                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                    <li class="nav-item">
+                                        <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">About</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Timeline</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="submit" class="profile-edit-btn" name="btnAddMore" value="Edit Profile"/>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="profile-work">
+                                <p>WORK LINK</p>
+                                <a href="">Website Link</a><br/>
+                                <a href="">Bootsnipp Profile</a><br/>
+                                <a href="">Bootply Profile</a>
+                                <p>SKILLS</p>
+                                <a href="">Web Designer</a><br/>
+                                <a href="">Web Developer</a><br/>
+                                <a href="">WordPress</a><br/>
+                                <a href="">WooCommerce</a><br/>
+                                <a href="">PHP, .Net</a><br/>
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="tab-content profile-tab" id="myTabContent">
+                                <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <label>User Id</label>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <p>Kshiti123</p>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <label>Name</label>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <p>Kshiti Ghelani</p>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <label>Email</label>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <p>kshitighelani@gmail.com</p>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <label>Phone</label>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <p>123 456 7890</p>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <label>Profession</label>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <p>Web Developer and Designer</p>
+                                                </div>
+                                            </div>
+                                </div>
+                                <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <label>Experience</label>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <p>Expert</p>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <label>Hourly Rate</label>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <p>10$/hr</p>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <label>Total Projects</label>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <p>230</p>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <label>English Level</label>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <p>Expert</p>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <label>Availability</label>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <p>6 months</p>
+                                                </div>
+                                            </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label>Your Bio</label><br/>
+                                            <p>Your detail description</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>           
+            </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- About us-->
+      
+      <!--Indoor Pool-->
+      
+      <!-- Portfolio-->
+      
+            <!-- Isotope Content-->
+            
+      <!-- Blog-->
+      
+          <!-- Owl Carousel-->
+         
+      <!-- Page Footer-->
+      <footer class="page-footer text-left text-sm-left">
+        <div class="shell-wide">
+          
+          
+        </div>
+      </footer>
+    </div>
+    <!-- PANEL-->
+    <!-- END PANEL-->
+    <!-- Global Mailform Output-->
+    <div class="snackbars" id="form-output-global"></div>
+    <!-- PhotoSwipe Gallery-->
+    <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="pswp__bg"></div>
+      <div class="pswp__scroll-wrap">
+        <div class="pswp__container">
+          <div class="pswp__item"></div>
+          <div class="pswp__item"></div>
+          <div class="pswp__item"></div>
+        </div>
+        <div class="pswp__ui pswp__ui--hidden">
+          <div class="pswp__top-bar">
+            <div class="pswp__counter"></div>
+            <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+            <button class="pswp__button pswp__button--share" title="Share"></button>
+            <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+            <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+            <div class="pswp__preloader">
+              <div class="pswp__preloader__icn">
+                <div class="pswp__preloader__cut">
+                  <div class="pswp__preloader__donut"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+            <div class="pswp__share-tooltip"></div>
+          </div>
+          <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)"></button>
+          <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button>
+          <div class="pswp__caption">
+            <div class="pswp__caption__cent"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Javascript-->
+    <script src="js/core.min.js"></script>
+    <script src="js/script.js"></script>
+    <!--Coded by Drel-->
+  </body>
+</html>

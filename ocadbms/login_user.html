@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Login</title>
+  <link rel="stylesheet" href="css/style2.css">
+</head>
+<body>
+  <div class="wrapper">
+    <form action="signin_user.php" method="POST">
+      <h2>User Login</h2>
+      <div class="input-field">
+        <input type="text" name="uid" required>
+        <label>Enter your ID</label>
+      </div>
+      <div class="input-field">
+        <input type="password" name="upassword" required>
+        <label>Enter your password</label>
+      </div>
+      <div class="forget">
+        <label for="remember">
+          <input type="checkbox" id="remember">
+          <p>Remember me</p>
+        </label>
+        <a href="#">Forgot password?</a>
+      </div>
+      <button type="submit">Log In</button>
+      <div class="register">
+        <p>Don't have an account? <a href="registration_user.html">Register</a></p>
+        <p>Back to <a href="index.html" style="color: yellow;">Login Selection</a></p>
+      </div>
+    </form>
+  </div>
+</body>
+</html>

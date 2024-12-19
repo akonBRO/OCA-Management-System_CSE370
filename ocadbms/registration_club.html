@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<!-- Coding By CodingNepal - codingnepalweb.com -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!----======== CSS ======== -->
+    <link rel="stylesheet" href="css/style1.css">
+     
+    <!----===== Iconscout CSS ===== -->
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+
+   <title>Club Regisration Form </title>
+</head>
+<body>
+    <div class="container">
+        <header>Club Registration</header>
+
+        <form action="insert_club.php" method='post'>
+            <div class="form first">
+                <div class="details club">
+                    <span class="title">Details</span>
+
+                    <div class="fields">
+                        <div class="input-field">
+                            <label>Club Name</label>
+                            <input type="text" placeholder="Enter your name" name='cname' required>
+                        </div>
+
+                        <div class="input-field">
+                            <label>Advisor Name</label>
+                            <input type="text" placeholder="Enter advisor name" name='caname' required>
+                        </div>
+
+                        <div class="input-field">
+                            <label>President Name</label>
+                            <input type="text" placeholder="Enter president name" name='cpname' required>
+                        </div>
+
+                        <div class="input-field">
+                            <label>Club Email</label>
+                            <input type="text" placeholder="Enter your email" name='cmail' required>
+                        </div>
+                        <div class="input-field">
+                            <label>Club ID</label>
+                            <input type="number" placeholder="Enter ID number" name='cid' required>
+                        </div>
+                        <div class="input-field">
+                            <label>Mobile Number</label>
+                            <input type="number" placeholder="Enter mobile number" name='cmobile' required>
+                        </div>
+
+                    
+                        <div class="input-field">
+                            <label>Choose Password</label>
+                            <input type="password" placeholder="Password" name='cpassword' required>
+                        </div>
+                    </div>
+                </div>
+                        
+                        <button class="submit">
+                            <span class="btnText">Submit</span>
+                            <i class="uil uil-navigator"></i>
+                        </button>
+                        <p>Back to <a href="login_club.html" style="color: blue;">Login</a></p>
+                    </div>
+    
+                </div> 
+            </div>
+        </form>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
