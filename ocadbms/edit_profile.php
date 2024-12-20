@@ -193,7 +193,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <h1>Edit Club Profile</h1>
         <form method="POST" enctype="multipart/form-data">
             <label for="club_name">Club Name:</label>
-            <input type="text" id="club_name" name="club_name" value="<?php echo htmlspecialchars($club_data['Club Name']); ?>" required>
+            <input type="text" id="club_name" name="club_name" value="<?php echo htmlspecialchars($club_data['Club Name']); ?>" readonly>
 
             <label for="advisor">Advisor:</label>
             <input type="text" id="advisor" name="advisor" value="<?php echo htmlspecialchars($club_data['Advisor']); ?>" required>

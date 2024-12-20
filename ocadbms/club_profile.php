@@ -314,6 +314,10 @@ if ($result && mysqli_num_rows($result) > 0) {
                 <span><?php echo htmlspecialchars($club_data['President']); ?></span>
             </div>
             <div>
+                <label>Club ID:</label>
+                <span><?php echo htmlspecialchars($club_data['Club ID']); ?></span>
+            </div>
+            <div>
                 <label>Email:</label>
                 <span><?php echo htmlspecialchars($club_data['Email']); ?></span>
             </div>

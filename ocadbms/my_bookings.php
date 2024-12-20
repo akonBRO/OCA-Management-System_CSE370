@@ -11,8 +11,25 @@ if (!isset($_SESSION['club_id']) || !isset($_SESSION['club_name'])) {
 // Query to get the club name
 $club_name= $_SESSION['club_name'];
 
+// Handle delete request
+if (isset($_POST['delete']) && isset($_POST['booking_id'])) {
+    $booking_id = intval($_POST['booking_id']);
+
+    // Delete related entries from all relevant tables
+    $delete_budget_items_query = "DELETE FROM budget_items WHERE booking_id = '$booking_id'";
+    $delete_budget_query = "DELETE FROM budget WHERE booking_id = '$booking_id'";
+    $delete_registered_std_query = "DELETE FROM registered_std WHERE booking_id = '$booking_id'";
+    $delete_booking_query = "DELETE FROM bookings WHERE booking_id = '$booking_id'";
+
+    // Execute the queries
+    mysqli_query($conn, $delete_budget_items_query);
+    mysqli_query($conn, $delete_budget_query);
+    mysqli_query($conn, $delete_registered_std_query);
+    mysqli_query($conn, $delete_booking_query);
+}
+
 // Query to fetch booking details for the logged-in user's club
-$query = "SELECT * FROM bookings WHERE `club_name` = '$club_name'";  // Use backticks for column names
+$query = "SELECT * FROM bookings WHERE club_name = '$club_name'";
 
 // Execute the query
 $result = mysqli_query($conn, $query);
@@ -27,6 +44,7 @@ $result = mysqli_query($conn, $query);
     <title>Your Bookings</title>
     <link rel="stylesheet" href="css/styledemo.css"> <!-- Your CSS -->
     <style>
+        /* Add your styles here */
         /* Reset some styles for consistency */
         * {
             margin: 0;
@@ -158,7 +176,12 @@ $result = mysqli_query($conn, $query);
         margin-left: 0;
     }
 }
-
+  /* General reset */
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
         /* Content Styling */
         .container {
@@ -178,15 +201,16 @@ $result = mysqli_query($conn, $query);
         }
 
         .container {
-            width: 90%;
-            max-width: 1000px;
-            background: #fff;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            border-radius: 10px;
-            padding: 20px;
-            text-align: center;
-            margin: 20px auto;
-        }
+    width: 95%; /* Increase width for more space */
+    max-width: 1500px; /* Allow a wider container */
+    background: #fff;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+    margin: 20px auto;
+}
+
 
         h1 {
             color: #333;
@@ -245,15 +269,66 @@ $result = mysqli_query($conn, $query);
             color: #FF4D4D;
         }
 
+        .status.budget {
+            color:rgb(0, 119, 255);
+        }
+
         /* Add a box shadow to the table */
         table {
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
         }
+ /* Your existing styles */
+ .budget-link {
+            color: #4CAF50;
+            font-weight: bold;
+            text-decoration: none;
+        }
+        .budget-link:hover {
+            color: #2e7d32;
+            text-decoration: underline;
+        }
+    
+        /* Existing styles omitted for brevity */
+        .delete-button {
+            background-color: #ff4d4d;
+            color: white;
+            padding: 5px 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
 
+        .delete-button:hover {
+            background-color: #ff3333;
+        }
     </style>
+    <script>
+        function confirmDeletion(bookingId) {
+            if (confirm("Are you sure you want to delete this booking?")) {
+                // Create a hidden form to submit the delete request
+                const form = document.createElement("form");
+                form.method = "POST";
+                form.action = "";
+
+                const bookingIdInput = document.createElement("input");
+                bookingIdInput.type = "hidden";
+                bookingIdInput.name = "booking_id";
+                bookingIdInput.value = bookingId;
+                form.appendChild(bookingIdInput);
+
+                const deleteInput = document.createElement("input");
+                deleteInput.type = "hidden";
+                deleteInput.name = "delete";
+                deleteInput.value = "1";
+                form.appendChild(deleteInput);
+
+                document.body.appendChild(form);
+                form.submit();
+            }
+        }
+    </script>
 </head>
 <body>
-
   <!-- Header Section -->
 <div class="header">
     <!-- Website Logo (Permanent Logo) -->
@@ -266,7 +341,7 @@ $result = mysqli_query($conn, $query);
     <nav>
         <a href="room_booking.php">Home</a>
         <a href="my_bookings.php">My Bookings</a>
-        <a href="#">Available Rooms</a>
+        <a href="audience.php">Audience</a>
         <a href="#">Contact</a>
         <a href="logout.php">Logout</a>
     </nav>
@@ -298,9 +373,13 @@ $result = mysqli_query($conn, $query);
                     <th>Event Name</th>
                     <th>Event Date</th>
                     <th>Time Slot</th>
-                    <th>Event Details</th>
                     <th>Room No</th>
+                    <th>Student Reg</th>
+                    <th>Event Details</th>
                     <th>Status</th>
+                    <th>Comments</th>
+                    <th>Budget</th>
+                    <th>Action</th>
                   </tr>";
             
             // Counter to keep track of serial number
@@ -308,19 +387,30 @@ $result = mysqli_query($conn, $query);
 
             // Loop through the results and display them in the table
             while ($row = mysqli_fetch_assoc($result)) {
-                // Output each row with the serial number
                 $status_class = 'status ' . strtolower($row['status']);
                 echo "<tr>
-                        <td>" . $serial_no . "</td> <!-- Display serial number -->
+                        <td>" . $serial_no . "</td>
                         <td>" . $row['event_name'] . "</td>
                         <td>" . $row['event_date'] . "</td>
                         <td>" . $row['time_slot'] . "</td>
-                        <td>" . $row['event_details'] . "</td>
                         <td>" . $row['room_number'] . "</td>
+                        <td>" . $row['std_reg'] . "</td>
+                        <td>" . $row['event_details'] . "</td>
                         <td class='$status_class'>" . $row['status'] . "</td>
-                      </tr>";
+                        <td>" . $row['comments'] . "</td>";
 
-                // Increment the serial number
+                // Add Budget Link if booking is approved
+                if (in_array(strtolower($row['status']), ['budget', 'approved'])) {
+                    echo "<td><a class='budget-link' href='budget_execute.php?booking_id=" . $row['booking_id'] . "'>Execute Budget</a></td>";
+                }
+                else {
+                    echo "<td>N/A</td>";
+                }
+
+                // Add Delete Button
+                echo "<td><button class='delete-button' onclick='confirmDeletion(" . $row['booking_id'] . ")'>Delete</button></td>";
+
+                echo "</tr>";
                 $serial_no++;
             }
             echo "</table>";
@@ -332,6 +422,5 @@ $result = mysqli_query($conn, $query);
         mysqli_close($conn);
         ?>
     </div>
-
 </body>
 </html>

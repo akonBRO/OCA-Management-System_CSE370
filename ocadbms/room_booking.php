@@ -171,7 +171,7 @@ if (!isset($_SESSION['club_id']) || !isset($_SESSION['club_name'])) {
     <nav>
         <a href="room_booking.php">Home</a>
         <a href="my_bookings.php">My Bookings</a>
-        <a href="#">Available Rooms</a>
+        <a href="audience.php">Audience</a>
         <a href="#">Contact</a>
         <a href="logout.php">Logout</a>
     </nav>
@@ -235,6 +235,19 @@ if (!isset($_SESSION['club_id']) || !isset($_SESSION['club_name'])) {
                 $result = mysqli_query($conn, $room_query);
                 while ($row = mysqli_fetch_assoc($result)) {
                     echo "<option value='{$row['room_number']}'>{$row['room_number']}</option>";
+                }
+                ?>
+            </select>
+
+                 <!-- REGISTRATION -->
+            <label for="registration">Student Registration?</label>
+            <select name="registration" id="registration" required>
+            <option value="">Select</option>
+                <?php
+                $room_query = "SELECT * FROM bookings";
+                $result = mysqli_query($conn, $room_query);
+                while ($row = mysqli_fetch_assoc($result)) {
+                    echo "<option value='{$row['std_reg']}'>{$row['std_reg']}</option>";
                 }
                 ?>
             </select>

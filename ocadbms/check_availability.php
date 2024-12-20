@@ -8,6 +8,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $room_number = $_POST['room_number'];
     $event_details = $_POST['event_details'];
     $club_name = $_POST['club_name'];
+    $std_reg = $_POST['registration'];
 
     // Check if room is available
     $check_query = "SELECT * FROM bookings 
@@ -21,8 +22,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         echo "<script>alert('Room $room_number is already booked for this date and time.'); window.location.href='room_booking.php';</script>";
     } else {
         // Insert new booking
-        $insert_query = "INSERT INTO bookings (event_name, event_date, time_slot, room_number, event_details, club_name) 
-                         VALUES ('$event_name', '$event_date', '$time_slot', '$room_number', '$event_details', '$club_name')";
+        $insert_query = "INSERT INTO bookings (event_name, event_date, time_slot, room_number, event_details, club_name, std_reg, comments) 
+                         VALUES ('$event_name', '$event_date', '$time_slot', '$room_number', '$event_details', '$club_name', '$std_reg', NULL)";
         if (mysqli_query($conn, $insert_query)) {
             echo "<script>alert('Room successfully booked!'); window.location.href='room_booking.php';</script>";
         } else {
