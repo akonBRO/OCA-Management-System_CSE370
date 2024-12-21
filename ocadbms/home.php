@@ -294,13 +294,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         echo "<td>" . htmlspecialchars($row['event_details']) . "</td>";
                         
                         // Check if the event is open for registration
-                        if ($row['std_reg'] === 'Yes') {
-                            echo "<td>
-                                    <form method='POST' action=''>
-                                        <input type='hidden' name='booking_id' value='" . $row['booking_id'] . "' />
-                                        <button type='submit' name='register_event' class='register-btn'>Register</button>
-                                    </form>
-                                  </td>";
+if ($row['std_reg'] === 'Yes') {
+    echo "<td>
+            <form method='POST' action=''>
+                <input type='hidden' name='booking_id' value='" . $row['booking_id'] . "' />
+                <button type='submit' name='register_event' class='register-btn' onclick='return confirmRegistration()'>Register</button>
+            </form>
+            <script>
+                function confirmRegistration() {
+                    return confirm('Are you sure you want to register for this event?');
+                }
+            </script>
+          </td>";
+
+
                         } else {
                             echo "<td>N/A</td>";
                         }
