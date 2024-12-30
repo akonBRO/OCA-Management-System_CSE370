@@ -3,7 +3,7 @@
 session_start();
 
 // Connect to the database
-require_once('DBconnect.php');
+@include 'DBconnect.php';
 
 // Check if the input fields are set
 if (isset($_POST['uid']) && isset($_POST['upassword'])) {

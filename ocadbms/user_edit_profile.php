@@ -184,7 +184,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <div class="form-group">
                 <button type="submit">Update Profile</button>
             </div>
+            
         </form>
+        <a href="user_profile.php"><button type="submit">Back</button></a>
     </div>
 </body>
 </html>

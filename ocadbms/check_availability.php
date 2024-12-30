@@ -25,7 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $insert_query = "INSERT INTO bookings (event_name, event_date, time_slot, room_number, event_details, club_name, std_reg, comments) 
                          VALUES ('$event_name', '$event_date', '$time_slot', '$room_number', '$event_details', '$club_name', '$std_reg', NULL)";
         if (mysqli_query($conn, $insert_query)) {
-            echo "<script>alert('Room successfully booked!'); window.location.href='room_booking.php';</script>";
+            echo "<script>alert('Room successfully booked!'); window.location.href='my_bookings.php';</script>";
         } else {
             echo "Error: " . mysqli_error($conn);
         }

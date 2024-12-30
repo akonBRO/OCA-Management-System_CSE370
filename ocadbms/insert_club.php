@@ -34,7 +34,7 @@ if (isset($_POST['cname']) && isset($_POST['caname']) && isset($_POST['cpname'])
     } else {
         // If Club ID does not exist, insert the new record
         $sql = "INSERT INTO clubs (`Club Name`, `Advisor`, `President`, `Email`, `Club ID`, `Mobile`, `Password`, `Club Description`, `Founded Date`, `Club Logo`, `Social Media Links`, `Number of Members`, `Achievements`) 
-                VALUES ('$c', '$a', '$p', '$m', '$i', '$x', '$s', NULL, NULL, NULL, NULL, NULL, NULL)";
+                VALUES ('$c', '$a', '$p', '$m', '$i', '$x', '$s', NULL, NULL, NULL, NULL, NULL, NULL, NULL)";
         
         // Execute the query
         $result = mysqli_query($conn, $sql);

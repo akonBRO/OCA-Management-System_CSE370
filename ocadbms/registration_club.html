@@ -45,8 +45,10 @@
                         </div>
                         <div class="input-field">
                             <label>Club ID</label>
-                            <input type="number" placeholder="Enter ID number" name='cid' required>
+                            <input type="number" placeholder="Enter your 8 digit ID" name="cid" min="10000000" max="99999999" title="Club ID must be an 8-digit number" required>
                         </div>
+                        
+                        
                         <div class="input-field">
                             <label>Mobile Number</label>
                             <input type="number" placeholder="Enter mobile number" name='cmobile' required>

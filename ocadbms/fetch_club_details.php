@@ -15,6 +15,7 @@ if (isset($_GET['club_id'])) {
 
     if ($club) {
         echo "<h2>" . htmlspecialchars($club['Club Name']) . "</h2>";
+        echo "<p><strong>Club Full Name:</strong> " . htmlspecialchars($club['fullname']) . "</p>";
         echo "<p><strong>Advisor:</strong> " . htmlspecialchars($club['Advisor']) . "</p>";
         echo "<p><strong>President:</strong> " . htmlspecialchars($club['President']) . "</p>";
         

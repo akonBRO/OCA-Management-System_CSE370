@@ -306,6 +306,10 @@ if ($result && mysqli_num_rows($result) > 0) {
 
         <div class="profile-info">
             <div>
+                <label>Club Full Name:</label>
+                <span><?php echo htmlspecialchars($club_data['fullname']); ?></span>
+            </div>
+            <div>
                 <label>Advisor:</label>
                 <span><?php echo htmlspecialchars($club_data['Advisor']); ?></span>
             </div>

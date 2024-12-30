@@ -15,7 +15,7 @@ if (!isset($_GET['booking_id'])) {
 $booking_id = intval($_GET['booking_id']);
 
 // Fetch booking details
-$query = "SELECT * FROM bookings WHERE booking_id = $booking_id AND status = 'budget' OR status = 'approved'";
+$query = "SELECT * FROM bookings WHERE booking_id = $booking_id AND (status = 'budget' OR status = 'approved')";
 $result = mysqli_query($conn, $query);
 
 if (mysqli_num_rows($result) == 0) {
@@ -89,6 +89,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirm_budget']) && 
         }
     }
 }
+
 // Handle item deletion
 if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['delete_item']) && $budget_status === 'pending') {
     $item_id = intval($_GET['delete_item']);
@@ -98,6 +99,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['delete_item']) && $budg
     
     if (mysqli_query($conn, $delete_query)) {
         echo "Item deleted successfully.";
+    } else {
+        echo "Error: " . mysqli_error($conn);
+    }
+}
+
+// Handle item update
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_item']) && $budget_status === 'pending') {
+    $item_id = intval($_POST['item_id']);
+    $quantity = intval($_POST['quantity']);
+    $unit_price = floatval($_POST['unit_price']);
+    $total_price = $quantity * $unit_price;
+
+    $update_query = "UPDATE budget_items 
+                     SET quantity = $quantity, unit_price = $unit_price, total_price = $total_price 
+                     WHERE id = $item_id AND booking_id = $booking_id";
+    
+    if (mysqli_query($conn, $update_query)) {
+        echo "Item updated successfully.";
     } else {
         echo "Error: " . mysqli_error($conn);
     }
@@ -227,7 +246,7 @@ table tr:hover {
 .back-button:hover {
     background-color: #27ae60;
 }
-/* Confirm Budget Button Styling */
+ /* Confirm Budget Button Styling */
 form button[type="submit"] {
     background-color: #27ae60; /* Green color */
     color: white;
@@ -247,17 +266,64 @@ form button[type="submit"]:hover {
 /* Delete Button Styling */
 .delete-btn {
     color: #e74c3c;
-    font-size: 1.5rem;
-    text-decoration: none;
+    font-size: 1.1rem;
     cursor: pointer;
-    padding: 5px;
+    background: none;
+    border: none;
 }
 
 .delete-btn:hover {
-    color: #c0392b;
+    text-decoration: underline;
 }
 
+.edit-btn {
+    color: #3498db;
+    font-size: 1.1rem;
+    cursor: pointer;
+    background: none;
+    border: none;
+}
 
+.edit-btn:hover {
+    text-decoration: underline;
+}
+
+/* Modal Styles */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 600px;
+    border-radius: 8px;
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
     </style>
 </head>
 <body>
@@ -305,7 +371,8 @@ form button[type="submit"]:hover {
                     <th>Action</th> <!-- Added a new column for the delete button -->
                 <?php endif; ?>
             </tr>
-            <?php while ($item = mysqli_fetch_assoc($items_result)) : ?>
+
+            <?php while ($item = mysqli_fetch_assoc($items_result)): ?>
                 <tr>
                     <td><?php echo htmlspecialchars($item['item_category']); ?></td>
                     <td><?php echo htmlspecialchars($item['item_name']); ?></td>
@@ -314,7 +381,8 @@ form button[type="submit"]:hover {
                     <td><?php echo $item['total_price']; ?></td>
                     <?php if ($budget_status === 'pending') : ?>
                         <td>
-                            <a href="?delete_item=<?php echo $item['id']; ?>&booking_id=<?php echo $booking_id; ?>" class="delete-btn">❌</a>
+                            <button class="edit-btn" onclick="openEditModal(<?php echo $item['id']; ?>, '<?php echo $item['item_name']; ?>', <?php echo $item['quantity']; ?>, <?php echo $item['unit_price']; ?>)">Edit</button>
+                            <a href="?delete_item=<?php echo $item['id']; ?>&booking_id=<?php echo $booking_id; ?>" class="delete-btn"><button class="delete-btn">Delete</button></a>
                         </td>
                     <?php endif; ?>
                 </tr>
@@ -331,17 +399,57 @@ form button[type="submit"]:hover {
         </h3>
 
         <!-- Confirm Budget Button -->
-<?php if ($budget_status === 'pending') : ?>
-    <form action="" method="POST">
-        <button type="submit" name="confirm_budget">
-            Confirm Budget
-        </button>
-    </form>
-<?php endif; ?>
-
+        <?php if ($budget_status === 'pending') : ?>
+            <form action="" method="POST">
+                <button type="submit" name="confirm_budget">
+                    Confirm Budget
+                </button>
+            </form>
+        <?php endif; ?>
 
         <!-- Back to My Booking Button -->
         <a href="my_bookings.php" class="back-button">Back to My Booking</a>
     </div>
+
+    <!-- Modal for editing item -->
+    <div id="editModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeEditModal()">&times;</span>
+            <h3>Edit Item</h3>
+            <form method="POST" id="editForm">
+                
+                <input type="hidden" name="item_id" id="item_id">
+                <label for="item_name">Item Name:</label>
+                <input type="text" name="item_name" id="edit_item_name" readonly><br><br>
+                <label for="edit_quantity">Quantity:</label>
+                <input type="number" name="quantity" id="edit_quantity" required><br><br>
+                <label for="edit_unit_price">Unit Price:</label>
+                <input type="number" step="0.01" name="unit_price" id="edit_unit_price" required>
+                <button type="submit" name="update_item">Update Item</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function openEditModal(itemId, itemName, quantity, unitPrice) {
+            document.getElementById('item_id').value = itemId;
+            document.getElementById('edit_item_name').value = itemName;
+            document.getElementById('edit_quantity').value = quantity;
+            document.getElementById('edit_unit_price').value = unitPrice;
+            document.getElementById('editModal').style.display = 'block';
+        }
+
+        function closeEditModal() {
+            document.getElementById('editModal').style.display = 'none';
+        }
+
+        function deleteItem(itemId) {
+            if (confirm("Are you sure you want to delete this item?")) {
+                window.location.href = "?delete_item=" + itemId;
+            }
+        }
+    </script>
+
 </body>
+
 </html>

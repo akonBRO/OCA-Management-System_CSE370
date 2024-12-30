@@ -248,7 +248,7 @@ if ($result && mysqli_num_rows($result) > 0) {
     </style>
 </head>
 <body>
-     <!-- Header Section -->
+<!-- Header Section -->
 <div class="header">
     <!-- Website Logo (Permanent Logo) -->
     <div class="website-logo">
@@ -258,12 +258,12 @@ if ($result && mysqli_num_rows($result) > 0) {
     
     <!-- Navigation Links -->
     <nav>
-        <a href="home.php">Home</a>
-        <a href="#">null</a>
-        <a href="#">null</a>
-        <a href="#">Contact</a>
-        <a href="logout.php">Logout</a>
-    </nav>
+            <a href="home.php">Home</a>
+            <a href="show_clubs.php">Clubs</a>
+            <a href="user_bookings.php">My Events</a>
+            <a href="#">Contact</a>
+            <a href="logout.php">Logout</a>
+        </nav>
 
     <!-- Right Bar for Club Logo -->
     <div class="user-info">

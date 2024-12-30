@@ -25,7 +25,7 @@ if (isset($_POST['uname']) && isset($_POST['dob']) && isset($_POST['umail']) && 
               </script>";
     } else {
         // If the uid does not exist, insert the new user
-        $sql = "INSERT INTO users VALUES ('$n', '$d', '$m', '$i', '$p', '$g', '$s')";
+        $sql = "INSERT INTO users VALUES ('$n', '$d', '$m', '$i', '$p', '$g', '$s',Null,Null,Null,Null,Null)";
 
         // Execute the query
         $result = mysqli_query($conn, $sql);

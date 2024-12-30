@@ -128,28 +128,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             color: #76c7c0;
             text-decoration: underline;
         }
-
-        @media (max-width: 768px) {
-            .header {
-                flex-direction: column;
-                padding: 20px 15px;
-            }
-
-            .header .website-logo {
-                text-align: center;
-                margin-bottom: 10px;
-            }
-
-            .header nav {
-                flex-direction: column;
-                margin-top: 15px;
-            }
-
-            .header nav a {
-                margin: 8px 0;
-            }
-        }
-
         .container {
             max-width: 1500px;
             margin: 20px auto;
@@ -191,25 +169,47 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
         table td:last-child, table th:last-child {
-            border-right: none; /* Remove right border on last column */
+            border-right: none;
         }
         /* Styling for the Register Button */
 .register-btn {
-    background-color:rgb(0, 151, 8); /* Blue background color */
-    color: white; /* White text */
-    padding: 10px 20px; /* Spacing inside the button */
-    font-size: 1em; /* Font size */
-    border: none; /* Remove the default border */
-    border-radius: 5px; /* Rounded corners */
-    cursor: pointer; /* Change the cursor to a pointer when hovering */
-    transition: background-color 0.3s ease, transform 0.3s ease; /* Smooth transition on hover */
+    background-color:rgb(0, 151, 8); 
+    color: white; 
+    padding: 10px 20px; 
+    font-size: 1em; 
+    border: none; 
+    border-radius: 5px; 
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease; 
 }
 
 /* Hover effect for the Register Button */
 .register-btn:hover {
-    background-color: #3498db; /* Change background on hover */
-    transform: translateY(-3px); /* Slightly raise the button */
+    background-color: #3498db; 
+    transform: translateY(-3px);
 }
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                padding: 20px 15px;
+            }
+
+            .header .website-logo {
+                text-align: center;
+                margin-bottom: 10px;
+            }
+
+            .header nav {
+                flex-direction: column;
+                margin-top: 15px;
+            }
+
+            .header nav a {
+                margin: 8px 0;
+            }
+        }
+
+       
 
 
         footer {
@@ -235,7 +235,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <nav>
             <a href="home.php">Home</a>
             <a href="show_clubs.php">Clubs</a>
-            <a href="#">null</a>
+            <a href="user_bookings.php">My Events</a>
             <a href="#">Contact</a>
             <a href="logout.php">Logout</a>
         </nav>
@@ -277,7 +277,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 $sql = "SELECT club_name, event_name, event_date, time_slot, room_number, event_details, std_reg, booking_id 
                         FROM bookings 
-                        WHERE status = 'approved'";
+                        WHERE status = 'approved'  ORDER BY `event_date`";
 
                 $result = mysqli_query($conn, $sql);
                 $serial = 1;
@@ -294,13 +294,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         echo "<td>" . htmlspecialchars($row['event_details']) . "</td>";
                         
                         // Check if the event is open for registration
-                        if ($row['std_reg'] === 'Yes') {
-                            echo "<td>
-                                    <form method='POST' action=''>
-                                        <input type='hidden' name='booking_id' value='" . $row['booking_id'] . "' />
-                                        <button type='submit' name='register_event' class='register-btn'>Register</button>
-                                    </form>
-                                  </td>";
+if ($row['std_reg'] === 'Yes') {
+    echo "<td>
+            <form method='POST' action=''>
+                <input type='hidden' name='booking_id' value='" . $row['booking_id'] . "' />
+                <button type='submit' name='register_event' class='register-btn' onclick='return confirmRegistration()'>Register</button>
+            </form>
+            <script>
+                function confirmRegistration() {
+                    return confirm('Are you sure you want to register for this event?');
+                }
+            </script>
+          </td>";
+
+
                         } else {
                             echo "<td>N/A</td>";
                         }

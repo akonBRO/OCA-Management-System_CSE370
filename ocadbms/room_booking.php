@@ -148,14 +148,102 @@ if (!isset($_SESSION['club_id']) || !isset($_SESSION['club_name'])) {
         width: 80px;
         margin-left: 0;
     }
+    .container {
+        padding: 20px 15px;
+    }
+
+    h1 {
+        font-size: 1.8rem;
+    }
+
+    button[type="submit"] {
+        font-size: 1rem;
+    }
 }
 
 
         /* Content Styling */
-        .container {
-            margin-top: 80px; /* Prevents content from hiding behind the fixed header */
-            padding: 20px;
-        }
+        /* Container Styling */
+.container {
+    max-width: 600px;
+    width: 100%;
+    margin-top: 350px;
+    background: #f9f9f9;
+    padding: 25px 30px;
+    border-radius: 15px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    border: 1px solid #e0e0e0;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.container:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+}
+/* Form Title */
+h1 {
+    text-align: center;
+    font-size: 2rem;
+    color: #333;
+    margin-bottom: 20px;
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+        /* Form Styling */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* Input, Select, Textarea Styling */
+input, select, textarea {
+    padding: 12px 15px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    background: #ffffff;
+    box-shadow: inset 0 3px 6px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+}
+
+input:focus, select:focus, textarea:focus {
+    border-color: #3498db;
+    box-shadow: 0 0 8px rgba(52, 152, 219, 0.3);
+    outline: none;
+}
+
+/* Placeholder Style */
+input::placeholder, textarea::placeholder {
+    color: #aaa;
+    font-size: 0.9rem;
+}
+
+/* Label Styling */
+label {
+    font-weight: bold;
+    color: #555;
+    margin-bottom: 5px;
+}
+
+/* Submit Button */
+button[type="submit"] {
+    background: linear-gradient(135deg, #3498db, #8e44ad);
+    color: white;
+    font-size: 1.1rem;
+    font-weight: bold;
+    border: none;
+    border-radius: 12px;
+    padding: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+button[type="submit"]:hover {
+    background: linear-gradient(135deg, #2980b9, #6c3483);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
     </style>
 </head>
 <body>
@@ -195,7 +283,7 @@ if (!isset($_SESSION['club_id']) || !isset($_SESSION['club_name'])) {
 
     <!-- Main Content -->
     <div class="container">
-        <h1>Room Booking System</h1>
+        <h1>Room Booking</h1>
         <?php
         //require_once('DBconnect.php');
         
@@ -210,8 +298,25 @@ if (!isset($_SESSION['club_id']) || !isset($_SESSION['club_name'])) {
             <input type="text" name="event_name" id="event_name" placeholder="Enter event name" required>
 
             <!-- Event Date -->
-            <label for="event_date">Event Date</label>
-            <input type="date" name="event_date" id="event_date" required>
+<label for="event_date">Event Date</label>
+<input type="date" name="event_date" id="event_date" required>
+
+<script>
+    // Get today's date
+    const today = new Date();
+
+    // Calculate the date 7 days from today
+    const sevenDaysLater = new Date();
+    sevenDaysLater.setDate(today.getDate() + 7);
+
+    // Format the date as YYYY-MM-DD
+    const minDateString = sevenDaysLater.toISOString().split('T')[0];
+
+    // Set the min attribute for the input
+    const eventDateInput = document.getElementById('event_date');
+    eventDateInput.min = minDateString;
+</script>
+
 
             <!-- Time Slot -->
             <label for="time_slot">Time Slot</label>
@@ -243,13 +348,8 @@ if (!isset($_SESSION['club_id']) || !isset($_SESSION['club_name'])) {
             <label for="registration">Student Registration?</label>
             <select name="registration" id="registration" required>
             <option value="">Select</option>
-                <?php
-                $room_query = "SELECT * FROM bookings";
-                $result = mysqli_query($conn, $room_query);
-                while ($row = mysqli_fetch_assoc($result)) {
-                    echo "<option value='{$row['std_reg']}'>{$row['std_reg']}</option>";
-                }
-                ?>
+            <option>No</option>
+            <option>Yes</option>
             </select>
 
             <!-- Event Details -->

@@ -32,6 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $founded_date = $_POST['founded_date'];
     $members = $_POST['members'];
     $achievements = $_POST['achievements'];
+    $fullname= $_POST['fullname'];
 
     // Handle logo upload
     if (isset($_FILES['club_logo']) && $_FILES['club_logo']['error'] == 0) {
@@ -67,6 +68,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         `Number of Members` = '$members',
         `Achievements` = '$achievements',
         `Club Logo` = '$logo_path'
+        'fullname'= '$fullname'
+
         WHERE `Club ID` = '$club_id'";
 
     if (mysqli_query($conn, $update_query)) {
@@ -194,6 +197,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <form method="POST" enctype="multipart/form-data">
             <label for="club_name">Club Name:</label>
             <input type="text" id="club_name" name="club_name" value="<?php echo htmlspecialchars($club_data['Club Name']); ?>" readonly>
+            <label for="club_name">Club ID:</label>
+            <input type="text" id="club_id" name="club_id" value="<?php echo htmlspecialchars($_SESSION['club_id']); ?>" readonly>
+
+            <label for="fullname">Club Full Name:</label>
+            <input type="text" id="fullname" name="fullname" value="<?php echo htmlspecialchars($club_data['fullname']); ?>" required>
 
             <label for="advisor">Advisor:</label>
             <input type="text" id="advisor" name="advisor" value="<?php echo htmlspecialchars($club_data['Advisor']); ?>" required>

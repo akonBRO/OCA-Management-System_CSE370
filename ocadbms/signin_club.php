@@ -1,9 +1,9 @@
 <?php
 // Start the session to store user data
-session_start();
 
 // First of all, we need to connect to the database
 require_once('DBconnect.php');
+session_start();
 
 // Check if the form has been submitted
 if (isset($_POST['cid']) && isset($_POST['cpassword'])) {
