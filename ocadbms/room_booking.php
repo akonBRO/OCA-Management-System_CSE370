@@ -16,7 +16,7 @@ if (!isset($_SESSION['club_id']) || !isset($_SESSION['club_name'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Room Booking Page</title>
+    <title>Event Booking Page</title>
     <link rel="stylesheet" href="css/styledemo.css">
     <style>
         /* Reset some styles for consistency */
@@ -283,7 +283,7 @@ button[type="submit"]:hover {
 
     <!-- Main Content -->
     <div class="container">
-        <h1>Room Booking</h1>
+        <h1>Event Booking</h1>
         <?php
         //require_once('DBconnect.php');
         

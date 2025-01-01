@@ -301,7 +301,7 @@ $clubs_result = mysqli_query($conn, $clubs_query);
         </a>
     </div>
 </div>
-    <h1>Registered Clubs</h1>
+    <h1>University Clubs</h1>
     <div class="club-container">
         <?php while ($club = mysqli_fetch_assoc($clubs_result)): ?>
             <div class="club-card">

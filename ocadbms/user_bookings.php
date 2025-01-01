@@ -124,7 +124,7 @@ if ($result_registered && mysqli_num_rows($result_registered) > 0) {
 
         body {
             font-family: 'Arial', sans-serif;
-            background-color: #f8f9fa;
+            background: linear-gradient(to right, #74ebd5, #ACB6E5);
             color: #333;
             line-height: 1.6;
         }

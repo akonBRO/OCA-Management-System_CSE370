@@ -50,7 +50,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             bio = '$bio',
             address = '$address',
             social_links = '$social_links',
-            profile_pic = '$profile_pic'
+            profile_pic = '$profile_pic',
+            otp= NULL,
+            status=1
         WHERE uid = $user_id
     ";
 
@@ -167,15 +169,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
             <div class="form-group">
                 <label for="bio">Bio:</label>
-                <textarea id="bio" name="bio"><?php echo htmlspecialchars($user_data['bio']); ?></textarea>
+                <textarea id="bio" name="bio"><?php echo htmlspecialchars($user_data['bio'] ?? 'N/A'); ?></textarea>
             </div>
             <div class="form-group">
                 <label for="address">Address:</label>
-                <input type="text" id="address" name="address" value="<?php echo htmlspecialchars($user_data['address']); ?>">
+                <input type="text" id="address" name="address" value="<?php echo htmlspecialchars($user_data['address'] ?? 'N/A'); ?>">
             </div>
             <div class="form-group">
                 <label for="social_links">Social Links:</label>
-                <textarea id="social_links" name="social_links"><?php echo htmlspecialchars($user_data['social_links']); ?></textarea>
+                <textarea id="social_links" name="social_links"><?php echo htmlspecialchars($user_data['social_links'] ?? 'N/A'); ?></textarea>
             </div>
             <div class="form-group">
                 <label for="profile_pic">Profile Picture:</label>

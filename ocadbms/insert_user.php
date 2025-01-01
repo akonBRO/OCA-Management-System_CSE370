@@ -1,41 +1,57 @@
 <?php
-// First, connect to the database
+// Enable error reporting
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
+// Connect to the database
 require_once('DBconnect.php');
 
-// Check if all the input fields in the form are set
-if (isset($_POST['uname']) && isset($_POST['dob']) && isset($_POST['umail']) && isset($_POST['uid']) && isset($_POST['umobile']) && isset($_POST['ugender']) && isset($_POST['upassword'])) {
-    // Retrieve input values from the form
-    $n = $_POST['uname'];
-    $d = $_POST['dob'];
-    $m = $_POST['umail'];
-    $i = $_POST['uid'];
-    $p = $_POST['umobile'];
-    $g = $_POST['ugender'];
-    $s = $_POST['upassword'];
+if (!$conn) {
+    die("Database connection failed: " . mysqli_connect_error());
+}
 
-    // Check if the uid already exists in the database
-    $check_query = "SELECT * FROM users WHERE uid = '$i'";
+// Check if the OTP field is set
+if (isset($_POST['otp'])) {
+    // Retrieve the combined OTP
+    $otp = $_POST['otp'];
+
+    // Query to check if the OTP exists in the database
+    $check_query = "SELECT * FROM users WHERE otp='$otp'";
     $check_result = mysqli_query($conn, $check_query);
 
-    if (mysqli_num_rows($check_result) > 0) {
-        // If the uid exists, show a message and redirect
-        echo "<script>
-                alert('User already exists with this UID!');
-                window.location.href = 'registration_user.php';
-              </script>";
-    } else {
-        // If the uid does not exist, insert the new user
-        $sql = "INSERT INTO users VALUES ('$n', '$d', '$m', '$i', '$p', '$g', '$s',Null,Null,Null,Null,Null)";
+    if (!$check_result) {
+        die("Query failed: " . mysqli_error($conn));
+    }
 
-        // Execute the query
+    if (mysqli_num_rows($check_result) > 0) {
+        // Update the user's status and reset the OTP
+        $sql = "UPDATE users 
+                SET updated_at=NOW(), otp=NULL, status=1 
+                WHERE otp='$otp'";
         $result = mysqli_query($conn, $sql);
 
-        // Check if the insertion was successful
-        if (mysqli_affected_rows($conn)) {
-            header("Location: login_user.html");
+        if ($result && mysqli_affected_rows($conn) > 0) {
+            echo "<script>
+                    alert('Student Registration Successful!');
+                    window.location.href = 'login_user.html';
+                  </script>";
         } else {
-            header("Location: registration_user.html");
+            echo "<script>
+                    alert('Error updating the user.');
+                    window.location.href = 'registration_user.html';
+                  </script>";
         }
+    } else {
+        echo "<script>
+                alert('Invalid OTP!');
+                window.location.href = 'verify.php';
+              </script>";
     }
+} else {
+    echo "<script>
+            alert('OTP is required!');
+            window.location.href = 'verify.php';
+          </script>";
 }
 ?>

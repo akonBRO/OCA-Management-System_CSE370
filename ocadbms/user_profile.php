@@ -312,14 +312,15 @@ if ($result && mysqli_num_rows($result) > 0) {
                 <label>Password:</label>
                 <span>********</span> <!-- Hiding the password -->
             </div>
-            <div>
+           <div>
                 <label>Address:</label>
-                <span><?php echo htmlspecialchars($user_data['address']); ?></span>
+                <span><?php echo htmlspecialchars($user_data['address'] ?? 'N/A'); ?></span>
             </div>
             <div>
                 <label>Bio:</label>
-                <span><?php echo htmlspecialchars($user_data['bio']); ?></span>
+                <span><?php echo htmlspecialchars($user_data['bio'] ?? 'N/A'); ?></span>
             </div>
+
         </div>
 
         <div class="edit-button">
