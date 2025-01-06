@@ -1,27 +1,25 @@
 <?php
 require_once('DBconnect.php');
-session_start(); // Start the session
+session_start(); 
+if (!isset($_SESSION['uname']) || !isset($_SESSION['uid'])) {
+    header("Location: index.html");
+    exit();
+}
 
-// Get the User ID from the session
 $user_id = (int)$_SESSION['uid'];
 
-// Query to fetch the user's details and bookings
+// user details fetch
 $query_registered = "SELECT * FROM registered_std WHERE `uid` = $user_id";
 $result_registered = mysqli_query($conn, $query_registered);
 
 if ($result_registered && mysqli_num_rows($result_registered) > 0) {
-    $registered_data = mysqli_fetch_assoc($result_registered); // Fetch user data
-    
+    $registered_data = mysqli_fetch_assoc($result_registered);
     // Fetch booking_ids associated with the user
     $booking_ids = [];
     do {
         $booking_ids[] = $registered_data['booking_id'];
-    } while ($registered_data = mysqli_fetch_assoc($result_registered));  // Collect all booking_ids for the user
-
-    // Convert array of booking_ids to a comma-separated string
+    } while ($registered_data = mysqli_fetch_assoc($result_registered));
     $booking_ids_str = implode(",", $booking_ids);
-
-    // Fetch bookings from the bookings table, sorted by event_date
     $query_bookings = "SELECT * FROM bookings WHERE `booking_id` IN ($booking_ids_str) ORDER BY `event_date`";
     $result_bookings = mysqli_query($conn, $query_bookings);
 } else {
@@ -36,19 +34,19 @@ if ($result_registered && mysqli_num_rows($result_registered) > 0) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User Bookings</title>
     <style>
-        /* Header Styling */
+    
         .header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             background-color: #2c3e50;
             color: white;
-            padding: 10px 20px; /* Adjusted padding for consistent spacing */
+            padding: 10px 20px; 
             position: fixed;
             top: 0;
             left: 0;
-            width: 100%; /* Ensures the header spans the full width */
-            box-sizing: border-box; /* Includes padding in the width calculation */
+            width: 100%; 
+            box-sizing: border-box; 
             z-index: 1000;
             box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
         }
@@ -115,7 +113,7 @@ if ($result_registered && mysqli_num_rows($result_registered) > 0) {
             color: #76c7c0;
             text-decoration: underline;
         }
-        /* Reset */
+       
         * {
             margin: 0;
             padding: 0;
@@ -186,14 +184,12 @@ if ($result_registered && mysqli_num_rows($result_registered) > 0) {
     </style>
 </head>
 <body>
-    <!-- Header Section -->
     <div class="header">
-        <!-- Website Logo -->
+       
         <div class="website-logo">
             <img src="images/oca.jpg" alt="Website Logo"> 
         </div>
-        
-        <!-- Navigation Links -->
+    
         <nav>
             <a href="home.php">Home</a>
             <a href="show_clubs.php">Clubs</a>
@@ -202,7 +198,6 @@ if ($result_registered && mysqli_num_rows($result_registered) > 0) {
             <a href="logout.php">Logout</a>
         </nav>
 
-        <!-- User Info -->
         <div class="user-info">
             <span>Welcome,</span>
             <a href="user_profile.php">

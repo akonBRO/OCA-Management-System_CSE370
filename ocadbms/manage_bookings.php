@@ -1,14 +1,11 @@
 <?php
 session_start();
 require_once('DBconnect.php');
-
-// Check if admin is logged in
 if (!isset($_SESSION['admin_id'])) {
-    header("Location: admin_login.php");
+    header("Location: login_admin.html");
     exit();
 }
 
-// Handle search query
 $searchQuery = "";
 if (isset($_POST['search'])) {
     $searchQuery = mysqli_real_escape_string($conn, $_POST['search_query']);
@@ -17,7 +14,7 @@ if (isset($_POST['search'])) {
     $searchSQL = "";
 }
 
-// Fetch bookings
+//query chalabe search er jonno
 $sql = "SELECT * FROM bookings $searchSQL";
 $result = mysqli_query($conn, $sql);
 ?>
@@ -195,14 +192,13 @@ $result = mysqli_query($conn, $sql);
         <h1>Manage Bookings</h1>
         
     <a href="admin_home.php" class="home-button">Home</a>
-    <!-- Other content -->
-        <!-- Search Bar -->
+        <!-- Searching-->
         <form method="POST" class="search-bar">
             <input type="text" name="search_query" placeholder="Search by Club Name or Booking ID" value="<?php echo htmlspecialchars($searchQuery); ?>">
             <button type="submit" name="search">Search</button>
         </form>
 
-        <!-- Bookings Table -->
+        <!--Table shuru-->
         <form method="POST" action="update_bookings.php">
             <table>
                 <thead>
@@ -242,7 +238,7 @@ $result = mysqli_query($conn, $sql);
                                 <td><input type="text" name="comments[<?php echo $row['booking_id']; ?>]" value="<?php echo htmlspecialchars($row['comments']); ?>"></td>
                                 <td>
                                     <?php
-                                    // Check if booking_id exists in budget or budget_items
+                                    // budget or budget_item table e booking_id match korle show korbe
                                     $bookingId = $row['booking_id'];
                                     $checkBudget = "SELECT 1 FROM budget WHERE booking_id = '$bookingId' LIMIT 1";
                                     $checkBudgetItems = "SELECT 1 FROM budget_items WHERE booking_id = '$bookingId' LIMIT 1";

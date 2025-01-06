@@ -2,13 +2,12 @@
 session_start();
 require_once('DBconnect.php');
 
-// Check if admin is logged in
 if (!isset($_SESSION['admin_id'])) {
-    header("Location: admin_login.php");
+    header("Location: login_admin.html");
     exit();
 }
 
-// Fetch students based on search or all students
+// searching er jonno
 $search_uid = '';
 if (isset($_GET['search'])) {
     $search_uid = $_GET['search_uid'];
@@ -31,6 +30,8 @@ if (isset($_POST['update_student'])) {
     $bio = $_POST['bio'];
     $address = $_POST['address'];
     $social_links = $_POST['social_links'];
+    $otp=$_POST['otp'];
+    $status= $_POST['status'];
 
     $update_query = "UPDATE users SET 
                         uname = '$uname', 
@@ -42,11 +43,13 @@ if (isset($_POST['update_student'])) {
                         profile_pic = '$profile_pic', 
                         bio = '$bio', 
                         address = '$address', 
-                        social_links = '$social_links' 
+                        social_links = '$social_links',
+                        otp='$otp',
+                        status= '$status'
                     WHERE uid = '$uid'";
     mysqli_query($conn, $update_query);
 
-    header("Location: view_reg_std.php"); // Refresh the page
+    header("Location: view_reg_std.php"); 
     exit;
 }
 ?>
@@ -58,7 +61,6 @@ if (isset($_POST['update_student'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registered Students</title>
     <style>
-        /* Add your existing styles here */
         body {
         font-family: 'Arial', sans-serif;
         background-color: #f4f4f9;
@@ -243,6 +245,8 @@ if (isset($_POST['update_student'])) {
             <th>Bio</th>
             <th>Address</th>
             <th>Social Links</th>
+            <th>OTP</th>
+            <th>Status</th>
             <th>Action</th>
         </tr>
         <?php while ($student = mysqli_fetch_assoc($students)) : ?>
@@ -265,6 +269,8 @@ if (isset($_POST['update_student'])) {
                     <td><textarea name="bio"><?php echo $student['bio']; ?></textarea></td>
                     <td><input type="text" name="address" value="<?php echo $student['address']; ?>"></td>
                     <td><textarea name="social_links"><?php echo $student['social_links']; ?></textarea></td>
+                    <td><textarea name="otp"><?php echo $student['otp']; ?></textarea></td>
+                    <td><textarea name="status"><?php echo $student['status']; ?></textarea></td>
                     <td>
                         <button type="submit" name="update_student" class="update-btn">Update</button>
                     </td>

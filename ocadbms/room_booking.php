@@ -1,10 +1,7 @@
 <?php
 require_once('DBconnect.php');
-session_start(); // Start the session
-
-// Check if the user is logged in by verifying the session variables
+session_start();
 if (!isset($_SESSION['club_id']) || !isset($_SESSION['club_name'])) {
-    // If not logged in, redirect to the login page
     header("Location: index.html");
     exit();
 }
@@ -19,29 +16,25 @@ if (!isset($_SESSION['club_id']) || !isset($_SESSION['club_name'])) {
     <title>Event Booking Page</title>
     <link rel="stylesheet" href="css/styledemo.css">
     <style>
-        /* Reset some styles for consistency */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-
         body {
             font-family: Arial, sans-serif;
         }
-/* General reset */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-/* Header Styling */
 .header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #2c3e50; /* Dark blue background */
+    background-color: #2c3e50; 
     color: white;
     padding: 5px 30px;
     position: fixed;
@@ -49,18 +42,16 @@ if (!isset($_SESSION['club_id']) || !isset($_SESSION['club_name'])) {
     left: 0;
     width: 100%;
     z-index: 1000;
-    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2); /* Adds some depth */
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
 }
 
-/* Website Logo (Permanent Logo) */
 .header .website-logo img {
-    width: 70px; /* Adjust size */
+    width: 70px;
     height: 70px;
     border-radius: 5px;
     margin-right: 10px;
 }
 
-/* Navigation Links */
 .header nav {
     display: flex;
     align-items: center;
@@ -79,13 +70,11 @@ if (!isset($_SESSION['club_id']) || !isset($_SESSION['club_name'])) {
     transition: color 0.3s ease, transform 0.3s ease;
 }
 
-/* Hover effects for links */
 .header nav a:hover {
-    color: #3498db; /* Bright blue color on hover */
-    transform: translateY(-5px); /* Slight lift effect */
+    color: #3498db; 
+    transform: translateY(-5px); 
 }
 
-/* Underline effect for navigation links */
 .header nav a::after {
     content: '';
     position: absolute;
@@ -98,7 +87,7 @@ if (!isset($_SESSION['club_id']) || !isset($_SESSION['club_name'])) {
 }
 
 .header nav a:hover::after {
-    width: 100%; /* Underline expands on hover */
+    width: 100%;
 }
 
 .header .user-info {
@@ -120,10 +109,10 @@ if (!isset($_SESSION['club_id']) || !isset($_SESSION['club_name'])) {
     text-decoration: underline;
 }
 .header .user-info a:hover {
-    color: #76c7c0; /* Light cyan on hover */
+    color: #76c7c0; 
 }
 
-/* Responsive Design */
+
 @media (max-width: 768px) {
     .header {
         flex-direction: column;
@@ -162,8 +151,6 @@ if (!isset($_SESSION['club_id']) || !isset($_SESSION['club_name'])) {
 }
 
 
-        /* Content Styling */
-        /* Container Styling */
 .container {
     max-width: 600px;
     width: 100%;
@@ -180,7 +167,7 @@ if (!isset($_SESSION['club_id']) || !isset($_SESSION['club_name'])) {
     transform: translateY(-5px);
     box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
 }
-/* Form Title */
+/* Form Styling */
 h1 {
     text-align: center;
     font-size: 2rem;
@@ -189,14 +176,13 @@ h1 {
     font-weight: 600;
     letter-spacing: 1px;
 }
-        /* Form Styling */
+
 form {
     display: flex;
     flex-direction: column;
     gap: 10px;
 }
 
-/* Input, Select, Textarea Styling */
 input, select, textarea {
     padding: 12px 15px;
     font-size: 1rem;
@@ -213,20 +199,18 @@ input:focus, select:focus, textarea:focus {
     outline: none;
 }
 
-/* Placeholder Style */
 input::placeholder, textarea::placeholder {
     color: #aaa;
     font-size: 0.9rem;
 }
 
-/* Label Styling */
+
 label {
     font-weight: bold;
     color: #555;
     margin-bottom: 5px;
 }
 
-/* Submit Button */
 button[type="submit"] {
     background: linear-gradient(135deg, #3498db, #8e44ad);
     color: white;
@@ -247,15 +231,11 @@ button[type="submit"]:hover {
     </style>
 </head>
 <body>
-   <!-- Header Section -->
 <div class="header">
-    <!-- Website Logo (Permanent Logo) -->
     <div class="website-logo">
-        <img src="images/oca.jpg" alt="Website Logo"> <!-- Permanent logo of the website -->
-         <!-- Optionally, you can add text if needed -->
+        <img src="images/oca.jpg" alt="Website Logo"> 
     </div>
-    
-    <!-- Navigation Links -->
+
     <nav>
         <a href="room_booking.php">Home</a>
         <a href="my_bookings.php">My Bookings</a>
@@ -264,7 +244,6 @@ button[type="submit"]:hover {
         <a href="logout.php">Logout</a>
     </nav>
 
-    <!-- Right Bar for Club Logo -->
     <div class="user-info">
         <span>Welcome,</span>
         <a href="club_profile.php">
@@ -281,7 +260,7 @@ button[type="submit"]:hover {
 
 
 
-    <!-- Main Content -->
+    <!-- Ekhan theke form shuru-->
     <div class="container">
         <h1>Event Booking</h1>
         <?php
@@ -289,36 +268,31 @@ button[type="submit"]:hover {
         
         ?>
         <form method="post" action="check_availability.php">
-            <!-- Club Name -->
+    
             <label for="club_name">Club Name</label>
             <input type="text" name="club_name" id="club_name" value="<?php echo htmlspecialchars($_SESSION['club_name']); ?>" readonly>
 
-            <!-- Event Name -->
-            <label for="event_name">Event Name</label>
+        
+            <label for="event_name">Event name</label>
             <input type="text" name="event_name" id="event_name" placeholder="Enter event name" required>
 
-            <!-- Event Date -->
+
 <label for="event_date">Event Date</label>
 <input type="date" name="event_date" id="event_date" required>
 
 <script>
-    // Get today's date
     const today = new Date();
 
-    // Calculate the date 7 days from today
+    // 7 din porer date dekhabe
     const sevenDaysLater = new Date();
     sevenDaysLater.setDate(today.getDate() + 7);
-
-    // Format the date as YYYY-MM-DD
     const minDateString = sevenDaysLater.toISOString().split('T')[0];
-
-    // Set the min attribute for the input
     const eventDateInput = document.getElementById('event_date');
     eventDateInput.min = minDateString;
 </script>
 
 
-            <!-- Time Slot -->
+            <!-- time table theke dropdown show korbe -->
             <label for="time_slot">Time Slot</label>
             <select name="time_slot" id="time_slot" required>
                 <option value="">Select Time Slot</option>
@@ -331,7 +305,7 @@ button[type="submit"]:hover {
                 ?>
             </select>
 
-            <!-- Room Number -->
+            <!-- room table theke dropdown show korbe  -->
             <label for="room_number">Room Number</label>
             <select name="room_number" id="room_number" required>
                 <option value="">Select Room</option>
@@ -344,19 +318,16 @@ button[type="submit"]:hover {
                 ?>
             </select>
 
-                 <!-- REGISTRATION -->
+
             <label for="registration">Student Registration?</label>
             <select name="registration" id="registration" required>
             <option value="">Select</option>
             <option>No</option>
             <option>Yes</option>
             </select>
-
-            <!-- Event Details -->
+            
             <label for="event_details">Event Details</label>
             <textarea name="event_details" id="event_details" rows="5" placeholder="Enter event details here..." required></textarea>
-
-            <!-- Submit Button -->
             <button type="submit">Check Availability</button>
         </form>
     </div>

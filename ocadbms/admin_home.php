@@ -1,9 +1,8 @@
 <?php
+require_once('DBconnect.php');
 session_start();
-
-// Check if admin is logged in
 if (!isset($_SESSION['admin_id'])) {
-    header("Location: admin_login.php"); // Redirect to login if not logged in
+    header("Location: admin_login.php");
     exit();
 }
 ?>
@@ -15,7 +14,6 @@ if (!isset($_SESSION['admin_id'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Home</title>
     <style>
-        /* Basic Reset */
         * {
             margin: 0;
             padding: 0;
@@ -28,7 +26,7 @@ if (!isset($_SESSION['admin_id'])) {
             color: #333;
         }
 
-        /* Header Styling */
+        
         .header {
             background-color: #007BFF;
             color: #fff;
@@ -72,7 +70,6 @@ if (!isset($_SESSION['admin_id'])) {
             font-size: 1.25rem;
         }
 
-        /* Responsive Design */
         @media (max-width: 600px) {
             .header h1 {
                 font-size: 1.2rem;
@@ -81,13 +78,12 @@ if (!isset($_SESSION['admin_id'])) {
     </style>
 </head>
 <body>
-    <!-- Header -->
     <div class="header">
         <h1>Welcome, <?php echo htmlspecialchars($_SESSION['admin_name']); ?>!</h1>
         <a href="logout.php">Logout</a>
     </div>
 
-    <!-- Main Content -->
+    <!-- Shob table data er jonno -->
     <div class="container">
         <div class="card">
             <h2>Manage Bookings</h2>

@@ -1,19 +1,17 @@
 <?php
 require_once('DBconnect.php');
-session_start(); // Start the session
+session_start();
+if (!isset($_SESSION['uname']) || !isset($_SESSION['uid'])) {
+    header("Location: index.html");
+    exit();
+}
 
-// Get the User ID from session
 $user_id = (int)$_SESSION['uid'];
-
-// Query to fetch the user details using User ID
 $query = "SELECT * FROM users WHERE `uid` = $user_id";
 
-// Execute the query
 $result = mysqli_query($conn, $query);
-
-// Check if any data is returned
 if ($result && mysqli_num_rows($result) > 0) {
-    $user_data = mysqli_fetch_assoc($result); // Fetch the user details
+    $user_data = mysqli_fetch_assoc($result); 
 } else {
     echo "No user found with the given User ID.";
     exit();
@@ -28,25 +26,24 @@ if ($result && mysqli_num_rows($result) > 0) {
     <title>User Profile</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap">
     <style>
-        /* General Reset */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-          /* Header Styling */
+
     .header {
         display: flex;
         justify-content: space-between;
         align-items: center;
         background-color: #2c3e50;
         color: white;
-        padding: 10px 20px; /* Adjusted padding for consistent spacing */
+        padding: 10px 20px; 
         position: fixed;
         top: 0;
         left: 0;
-        width: 100%; /* Ensures the header spans the full width */
-        box-sizing: border-box; /* Includes padding in the width calculation */
+        width: 100%; 
+        box-sizing: border-box; 
         z-index: 1000;
         box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
     }
@@ -227,7 +224,7 @@ if ($result && mysqli_num_rows($result) > 0) {
             background: #45A049;
         }
 
-        /* Responsive Design */
+    
         @media (max-width: 768px) {
             .profile-info div {
                 flex-direction: column;
@@ -250,13 +247,11 @@ if ($result && mysqli_num_rows($result) > 0) {
 <body>
 <!-- Header Section -->
 <div class="header">
-    <!-- Website Logo (Permanent Logo) -->
+
     <div class="website-logo">
-        <img src="images/oca.jpg" alt="Website Logo"> <!-- Permanent logo of the website -->
-         <!-- Optionally, you can add text if needed -->
+        <img src="images/oca.jpg" alt="Website Logo"> 
+
     </div>
-    
-    <!-- Navigation Links -->
     <nav>
             <a href="home.php">Home</a>
             <a href="show_clubs.php">Clubs</a>
@@ -265,7 +260,6 @@ if ($result && mysqli_num_rows($result) > 0) {
             <a href="logout.php">Logout</a>
         </nav>
 
-    <!-- Right Bar for Club Logo -->
     <div class="user-info">
         <span>Welcome,</span>
         <a href="user_profile.php">
@@ -281,7 +275,6 @@ if ($result && mysqli_num_rows($result) > 0) {
 </div>
     <div class="profile-container">
         <div class="profile-header">
-            <!-- User Photo -->
             <img src="<?php echo htmlspecialchars($user_data['profile_pic']); ?>" alt="User Photo">
             <h1><?php echo htmlspecialchars($user_data['uname']); ?></h1>
             <p>Welcome to your profile. Manage your personal details here.</p>
@@ -310,7 +303,7 @@ if ($result && mysqli_num_rows($result) > 0) {
             </div>
             <div>
                 <label>Password:</label>
-                <span>********</span> <!-- Hiding the password -->
+                <span>********</span> 
             </div>
            <div>
                 <label>Address:</label>

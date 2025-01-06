@@ -1,15 +1,13 @@
 <?php
 require_once('DBconnect.php');
-session_start(); // Start the session
+session_start();
 
-// Check if the user is logged in by verifying the session variables
 if (!isset($_SESSION['club_id']) || !isset($_SESSION['club_name'])) {
-    // If not logged in, redirect to the login page
     header("Location: index.html");
     exit();
 }
 
-// Fetch approved bookings with std_reg = 'Yes'
+// audience allow korle query run korbe
 $query = "SELECT * 
           FROM bookings 
           WHERE status = 'approved' 
@@ -25,9 +23,9 @@ $result = mysqli_query($conn, $query);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Audience Page</title>
-    <link rel="stylesheet" href="styles.css"> <!-- External CSS -->
+    <link rel="stylesheet" href="styles.css"> 
     <style>
-        /* General Styles */
+      
 body {
     font-family: 'Poppins', sans-serif;
     background: #f8f9fd;
@@ -58,7 +56,7 @@ h1 {
     text-transform: uppercase;
 }
 
-/* Table Styles */
+
 table {
     width: 100%;
     border-spacing: 0;
@@ -122,7 +120,7 @@ td:last-child {
     padding-right: 20px;
 }
 
-/* Button Styles */
+
 .btn {
     background: #6a11cb;
     color: white;
@@ -142,7 +140,7 @@ td:last-child {
     transform: translateY(-2px);
 }
 
-/* Floating Page Styles */
+
 .floating-page {
     position: fixed;
     top: 50%;
@@ -205,7 +203,6 @@ td:last-child {
     transform: scale(1.1);
 }
 
-/* Audience Details Table in Floating Page */
 .floating-page table {
     width: 100%;
     border-collapse: collapse;
@@ -234,7 +231,7 @@ td:last-child {
     background: #f0f0f5;
 }
 
-/* Total Audience Styles */
+
 p {
     font-size: 1.2rem;
     font-weight: 500;
@@ -242,19 +239,19 @@ p {
     margin-top: 15px;
     text-align: center;
 }
-/* General reset */
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-/* Header Styling */
+
 .header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #2c3e50; /* Dark blue background */
+    background-color: #2c3e50; 
     color: white;
     padding: 5px 30px;
     position: fixed;
@@ -262,18 +259,18 @@ p {
     left: 0;
     width: 100%;
     z-index: 1000;
-    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2); /* Adds some depth */
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
 }
 
-/* Website Logo (Permanent Logo) */
+
 .header .website-logo img {
-    width: 70px; /* Adjust size */
+    width: 70px; 
     height: 70px;
     border-radius: 5px;
     margin-right: 10px;
 }
 
-/* Navigation Links */
+
 .header nav {
     display: flex;
     align-items: center;
@@ -292,13 +289,13 @@ p {
     transition: color 0.3s ease, transform 0.3s ease;
 }
 
-/* Hover effects for links */
+
 .header nav a:hover {
-    color: #3498db; /* Bright blue color on hover */
-    transform: translateY(-5px); /* Slight lift effect */
+    color: #3498db;
+    transform: translateY(-5px); 
 }
 
-/* Underline effect for navigation links */
+
 .header nav a::after {
     content: '';
     position: absolute;
@@ -311,7 +308,7 @@ p {
 }
 
 .header nav a:hover::after {
-    width: 100%; /* Underline expands on hover */
+    width: 100%;
 }
 
 .header .user-info {
@@ -333,10 +330,9 @@ p {
     text-decoration: underline;
 }
 .header .user-info a:hover {
-    color: #76c7c0; /* Light cyan on hover */
+    color: #76c7c0;
 }
 
-/* Responsive Design */
 @media (max-width: 768px) {
     .header {
         flex-direction: column;
@@ -365,17 +361,15 @@ p {
 
     </style>
     <script>
-        // JavaScript to handle the floating page
+        //floating page er jonno
         function showAudience(bookingId) {
             const floatingPage = document.getElementById('floating-page');
             const audienceTable = document.getElementById('audience-table-body');
             const totalAudience = document.getElementById('total-audience');
 
-            // Fetch audience details via AJAX
             fetch(`fetch_audience.php?booking_id=${bookingId}`)
                 .then(response => response.json())
                 .then(data => {
-                    // Populate the table with audience details
                     audienceTable.innerHTML = data.audienceList.map((audience, index) => `
                         <tr>
                             <td>${index + 1}</td>
@@ -387,27 +381,23 @@ p {
                     `).join('');
                     totalAudience.innerText = data.totalAudience;
 
-                    // Show the floating page
                     floatingPage.classList.add('active');
                 });
         }
 
-        // Close the floating page
         function closeFloatingPage() {
             document.getElementById('floating-page').classList.remove('active');
         }
     </script>
 </head>
 <body>
-     <!-- Header Section -->
+
 <div class="header">
-    <!-- Website Logo (Permanent Logo) -->
+
     <div class="website-logo">
-        <img src="images/oca.jpg" alt="Website Logo"> <!-- Permanent logo of the website -->
-         <!-- Optionally, you can add text if needed -->
+        <img src="images/oca.jpg" alt="Website Logo">
     </div>
-    
-    <!-- Navigation Links -->
+
     <nav>
         <a href="room_booking.php">Home</a>
         <a href="my_bookings.php">My Bookings</a>
@@ -416,7 +406,6 @@ p {
         <a href="logout.php">Logout</a>
     </nav>
 
-    <!-- Right Bar for Club Logo -->
     <div class="user-info">
         <span>Welcome,</span>
         <a href="club_profile.php">

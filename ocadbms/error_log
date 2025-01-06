@@ -32,3 +32,43 @@ Stack trace:
 [01-Jan-2025 11:10:57 UTC] PHP Deprecated:  htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated in /home/bracuoca/public_html/user_edit_profile.php on line 180
 [01-Jan-2025 11:18:33 UTC] PHP Warning:  session_regenerate_id(): Session ID cannot be regenerated when there is no active session in /home/bracuoca/public_html/logout.php on line 11
 [01-Jan-2025 11:32:13 UTC] PHP Warning:  session_regenerate_id(): Session ID cannot be regenerated when there is no active session in /home/bracuoca/public_html/logout.php on line 11
+[01-Jan-2025 18:50:30 Asia/Dhaka] PHP Fatal error:  Uncaught mysqli_sql_exception: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'status= '1'
+                    WHERE uid = '22301175'' at line 12 in /home/bracuoca/public_html/view_reg_std.php:50
+Stack trace:
+#0 /home/bracuoca/public_html/view_reg_std.php(50): mysqli_query(Object(mysqli), 'UPDATE users SE...')
+#1 {main}
+  thrown in /home/bracuoca/public_html/view_reg_std.php on line 50
+[01-Jan-2025 18:51:26 Asia/Dhaka] PHP Fatal error:  Uncaught mysqli_sql_exception: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'otp=''
+                        status= '1'
+                    WHERE uid = ...' at line 12 in /home/bracuoca/public_html/view_reg_std.php:51
+Stack trace:
+#0 /home/bracuoca/public_html/view_reg_std.php(51): mysqli_query(Object(mysqli), 'UPDATE users SE...')
+#1 {main}
+  thrown in /home/bracuoca/public_html/view_reg_std.php on line 51
+[01-Jan-2025 13:48:52 UTC] PHP Warning:  session_regenerate_id(): Session ID cannot be regenerated when there is no active session in /home/bracuoca/public_html/logout.php on line 11
+[02-Jan-2025 15:36:13 UTC] PHP Warning:  session_regenerate_id(): Session ID cannot be regenerated when there is no active session in /home/bracuoca/public_html/logout.php on line 11
+[02-Jan-2025 19:29:34 UTC] PHP Warning:  session_regenerate_id(): Session ID cannot be regenerated when there is no active session in /home/bracuoca/public_html/logout.php on line 11
+[02-Jan-2025 19:30:24 UTC] PHP Warning:  session_regenerate_id(): Session ID cannot be regenerated when there is no active session in /home/bracuoca/public_html/logout.php on line 11
+[02-Jan-2025 19:44:15 UTC] PHP Warning:  session_regenerate_id(): Session ID cannot be regenerated when there is no active session in /home/bracuoca/public_html/logout.php on line 11
+[03-Jan-2025 16:40:30 Asia/Dhaka] PHP Deprecated:  htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated in /home/bracuoca/public_html/user_profile.php on line 285
+[04-Jan-2025 06:30:35 Asia/Dhaka] PHP Warning:  Undefined array key "uid" in /home/bracuoca/public_html/user_bookings.php on line 6
+[04-Jan-2025 06:30:42 Asia/Dhaka] PHP Warning:  Undefined array key "uid" in /home/bracuoca/public_html/user_bookings.php on line 6
+[04-Jan-2025 06:30:44 Asia/Dhaka] PHP Warning:  Undefined array key "uid" in /home/bracuoca/public_html/user_bookings.php on line 6
+[04-Jan-2025 18:00:25 UTC] PHP Warning:  session_regenerate_id(): Session ID cannot be regenerated when there is no active session in /home/bracuoca/public_html/logout.php on line 11
+[05-Jan-2025 11:25:29 UTC] PHP Warning:  session_regenerate_id(): Session ID cannot be regenerated when there is no active session in /home/bracuoca/public_html/logout.php on line 11
+[05-Jan-2025 21:58:43 UTC] PHP Warning:  session_regenerate_id(): Session ID cannot be regenerated when there is no active session in /home/bracuoca/public_html/logout.php on line 11
+[06-Jan-2025 04:56:36 Asia/Dhaka] PHP Warning:  Undefined array key "club_id" in /home/bracuoca/public_html/club_profile.php on line 6
+[06-Jan-2025 04:56:41 Asia/Dhaka] PHP Warning:  Undefined array key "club_id" in /home/bracuoca/public_html/club_profile.php on line 6
+[06-Jan-2025 04:56:42 Asia/Dhaka] PHP Warning:  Undefined array key "club_id" in /home/bracuoca/public_html/club_profile.php on line 6
+[06-Jan-2025 04:56:42 Asia/Dhaka] PHP Warning:  Undefined array key "club_id" in /home/bracuoca/public_html/club_profile.php on line 6
+[06-Jan-2025 04:59:55 Asia/Dhaka] PHP Deprecated:  htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated in /home/bracuoca/public_html/manage_bookings.php on line 242
+[06-Jan-2025 05:02:23 Asia/Dhaka] PHP Deprecated:  htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated in /home/bracuoca/public_html/manage_bookings.php on line 242
+[05-Jan-2025 23:21:07 UTC] PHP Warning:  session_regenerate_id(): Session ID cannot be regenerated when there is no active session in /home/bracuoca/public_html/logout.php on line 11
+[05-Jan-2025 23:21:08 UTC] PHP Warning:  session_regenerate_id(): Session ID cannot be regenerated when there is no active session in /home/bracuoca/public_html/logout.php on line 11
+[05-Jan-2025 23:49:35 UTC] PHP Warning:  session_regenerate_id(): Session ID cannot be regenerated when there is no active session in /home/bracuoca/public_html/logout.php on line 11
+[06-Jan-2025 05:44:20 UTC] PHP Warning:  session_regenerate_id(): Session ID cannot be regenerated when there is no active session in /home/bracuoca/public_html/logout.php on line 11
+[06-Jan-2025 06:10:34 UTC] PHP Warning:  session_regenerate_id(): Session ID cannot be regenerated when there is no active session in /home/bracuoca/public_html/logout.php on line 11
+[06-Jan-2025 07:18:13 UTC] PHP Warning:  session_regenerate_id(): Session ID cannot be regenerated when there is no active session in /home/bracuoca/public_html/logout.php on line 11
+[06-Jan-2025 20:50:18 Asia/Dhaka] PHP Deprecated:  htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated in /home/bracuoca/public_html/user_profile.php on line 280
+[06-Jan-2025 20:52:07 Asia/Dhaka] PHP Deprecated:  htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated in /home/bracuoca/public_html/user_profile.php on line 280
+[06-Jan-2025 15:05:52 UTC] PHP Warning:  session_regenerate_id(): Session ID cannot be regenerated when there is no active session in /home/bracuoca/public_html/logout.php on line 11

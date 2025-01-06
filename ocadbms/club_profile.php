@@ -1,19 +1,15 @@
 <?php
 require_once('DBconnect.php');
-session_start(); // Start the session
+session_start();
 
-// Get the Club ID from session
+
 $club_id = (int)$_SESSION['club_id'];
 
-// Query to fetch the club details using Club ID
 $query = "SELECT * FROM clubs WHERE `Club ID` = $club_id";
-
-// Execute the query
 $result = mysqli_query($conn, $query);
 
-// Check if any data is returned
-if ($result && mysqli_num_rows($result) > 0) {
-    $club_data = mysqli_fetch_assoc($result); // Fetch the club details
+if ($result && mysqli_num_rows($result)>0) {
+    $club_data = mysqli_fetch_assoc($result); 
 } else {
     echo "No club found with the given Club ID.";
     exit();
@@ -28,7 +24,7 @@ if ($result && mysqli_num_rows($result) > 0) {
     <title>Club Profile</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap">
     <style>
-        /* General Reset */
+        
         * {
             margin: 0;
             padding: 0;
@@ -127,7 +123,6 @@ if ($result && mysqli_num_rows($result) > 0) {
             background: #45A049;
         }
 
-        /* Responsive Design */
         @media (max-width: 768px) {
             .profile-info div {
                 flex-direction: column;
@@ -146,12 +141,12 @@ if ($result && mysqli_num_rows($result) > 0) {
             }
         }
 
-        /* Header Styling */
+        
 .header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #2c3e50; /* Dark blue background */
+    background-color: #2c3e50; 
     color: white;
     padding: 5px 30px;
     position: fixed;
@@ -159,18 +154,17 @@ if ($result && mysqli_num_rows($result) > 0) {
     left: 0;
     width: 100%;
     z-index: 1000;
-    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2); /* Adds some depth */
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2); 
 }
 
-/* Website Logo (Permanent Logo) */
 .header .website-logo img {
-    width: 70px; /* Adjust size */
+    width: 70px;
     height: 70px;
     border-radius: 5px;
     margin-right: 10px;
 }
 
-/* Navigation Links */
+
 .header nav {
     display: flex;
     align-items: center;
@@ -189,13 +183,12 @@ if ($result && mysqli_num_rows($result) > 0) {
     transition: color 0.3s ease, transform 0.3s ease;
 }
 
-/* Hover effects for links */
 .header nav a:hover {
-    color: #3498db; /* Bright blue color on hover */
-    transform: translateY(-5px); /* Slight lift effect */
+    color: #3498db; 
+    transform: translateY(-5px); 
 }
 
-/* Underline effect for navigation links */
+
 .header nav a::after {
     content: '';
     position: absolute;
@@ -208,8 +201,7 @@ if ($result && mysqli_num_rows($result) > 0) {
 }
 
 .header nav a:hover::after {
-    width: 100%; /* Underline expands on hover */
-}
+    width: 100%; }
 
 .header .user-info {
     font-size: 1.1em;
@@ -230,10 +222,10 @@ if ($result && mysqli_num_rows($result) > 0) {
     text-decoration: underline;
 }
 .header .user-info a:hover {
-    color: #76c7c0; /* Light cyan on hover */
+    color: #76c7c0; 
 }
 
-/* Responsive Design */
+
 @media (max-width: 768px) {
     .header {
         flex-direction: column;
@@ -263,15 +255,13 @@ if ($result && mysqli_num_rows($result) > 0) {
     </style>
 </head>
 <body>
-    <!-- Header Section -->
+
 <div class="header">
-    <!-- Website Logo (Permanent Logo) -->
+
     <div class="website-logo">
-        <img src="images/oca.jpg" alt="Website Logo"> <!-- Permanent logo of the website -->
-         <!-- Optionally, you can add text if needed -->
+        <img src="images/oca.jpg" alt="Website Logo"> 
+       
     </div>
-    
-    <!-- Navigation Links -->
     <nav>
         <a href="room_booking.php">Home</a>
         <a href="my_bookings.php">My Bookings</a>
@@ -279,8 +269,6 @@ if ($result && mysqli_num_rows($result) > 0) {
         <a href="#">Contact</a>
         <a href="logout.php">Logout</a>
     </nav>
-
-    <!-- Right Bar for Club Logo -->
     <div class="user-info">
         <span>Welcome,</span>
         <a href="club_profile.php">
@@ -298,7 +286,6 @@ if ($result && mysqli_num_rows($result) > 0) {
 
     <div class="profile-container">
         <div class="profile-header">
-            <!-- Club Logo -->
             <img src="<?php echo htmlspecialchars($club_data['Club Logo']); ?>" alt="Club Logo">
             <h1><?php echo htmlspecialchars($club_data['Club Name']); ?></h1>
             <p>Welcome to your club profile. Manage your club details here.</p>
@@ -331,7 +318,7 @@ if ($result && mysqli_num_rows($result) > 0) {
             </div>
             <div>
                 <label>Password:</label>
-                <span>********</span> <!-- Hiding the password -->
+                <span>********</span> 
             </div>
             <div>
                 <label>Description:</label>

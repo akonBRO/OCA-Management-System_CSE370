@@ -1,40 +1,30 @@
 <?php
 require_once('DBconnect.php');
-session_start(); // Start the session
-
-// Check if the user is logged in by verifying the session variables
+session_start();
 if (!isset($_SESSION['club_id']) || !isset($_SESSION['club_name'])) {
-    // If not logged in, redirect to the login page
     header("Location: index.html");
     exit();
 }
-// Query to get the club name
 $club_name= $_SESSION['club_name'];
 
-// Handle delete request
+// Delete er query
 if (isset($_POST['delete']) && isset($_POST['booking_id'])) {
     $booking_id = intval($_POST['booking_id']);
 
-    // Delete related entries from all relevant tables
     $delete_budget_items_query = "DELETE FROM budget_items WHERE booking_id = '$booking_id'";
     $delete_budget_query = "DELETE FROM budget WHERE booking_id = '$booking_id'";
     $delete_registered_std_query = "DELETE FROM registered_std WHERE booking_id = '$booking_id'";
     $delete_booking_query = "DELETE FROM bookings WHERE booking_id = '$booking_id'";
-
-    // Execute the queries
     mysqli_query($conn, $delete_budget_items_query);
     mysqli_query($conn, $delete_budget_query);
     mysqli_query($conn, $delete_registered_std_query);
     mysqli_query($conn, $delete_booking_query);
 }
 
-// Query to fetch booking details for the logged-in user's club
+// club er all data fetch
 $query = "SELECT * FROM bookings WHERE club_name = '$club_name'";
-
-// Execute the query
 $result = mysqli_query($conn, $query);
 
-// Start the HTML structure
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -42,10 +32,8 @@ $result = mysqli_query($conn, $query);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Your Bookings</title>
-    <link rel="stylesheet" href="css/styledemo.css"> <!-- Your CSS -->
+    <link rel="stylesheet" href="css/styledemo.css"> 
     <style>
-        /* Add your styles here */
-        /* Reset some styles for consistency */
         * {
             margin: 0;
             padding: 0;
@@ -55,20 +43,18 @@ $result = mysqli_query($conn, $query);
         body {
             font-family: Arial, sans-serif;
         }
-
-       /* General reset */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-/* Header Styling */
+
 .header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #2c3e50; /* Dark blue background */
+    background-color: #2c3e50; 
     color: white;
     padding: 5px 30px;
     position: fixed;
@@ -76,18 +62,17 @@ $result = mysqli_query($conn, $query);
     left: 0;
     width: 100%;
     z-index: 1000;
-    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2); /* Adds some depth */
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2); 
 }
 
-/* Website Logo (Permanent Logo) */
+
 .header .website-logo img {
-    width: 70px; /* Adjust size */
+    width: 70px; 
     height: 70px;
     border-radius: 5px;
     margin-right: 10px;
 }
 
-/* Navigation Links */
 .header nav {
     display: flex;
     align-items: center;
@@ -106,13 +91,12 @@ $result = mysqli_query($conn, $query);
     transition: color 0.3s ease, transform 0.3s ease;
 }
 
-/* Hover effects for links */
+
 .header nav a:hover {
-    color: #3498db; /* Bright blue color on hover */
-    transform: translateY(-5px); /* Slight lift effect */
+    color: #3498db; 
+    transform: translateY(-5px); 
 }
 
-/* Underline effect for navigation links */
 .header nav a::after {
     content: '';
     position: absolute;
@@ -125,7 +109,7 @@ $result = mysqli_query($conn, $query);
 }
 
 .header nav a:hover::after {
-    width: 100%; /* Underline expands on hover */
+    width: 100%; 
 }
 
 .header .user-info {
@@ -147,10 +131,9 @@ $result = mysqli_query($conn, $query);
     text-decoration: underline;
 }
 .header .user-info a:hover {
-    color: #76c7c0; /* Light cyan on hover */
+    color: #76c7c0; 
 }
 
-/* Responsive Design */
 @media (max-width: 768px) {
     .header {
         flex-direction: column;
@@ -176,19 +159,18 @@ $result = mysqli_query($conn, $query);
         margin-left: 0;
     }
 }
-  /* General reset */
+
   * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-        /* Content Styling */
         .container {
-            margin-top: 80px; /* Prevents content from hiding behind the fixed header */
+            margin-top: 80px;
             padding: 20px;
         }
-        /* Page Content */
+       
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: #f4f7fa;
@@ -201,8 +183,8 @@ $result = mysqli_query($conn, $query);
         }
 
         .container {
-    width: 95%; /* Increase width for more space */
-    max-width: 1500px; /* Allow a wider container */
+    width: 95%; 
+    max-width: 1500px;
     background: #fff;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
@@ -273,11 +255,10 @@ $result = mysqli_query($conn, $query);
             color:rgb(0, 119, 255);
         }
 
-        /* Add a box shadow to the table */
+       
         table {
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
         }
- /* Your existing styles */
  .budget-link {
             color: #4CAF50;
             font-weight: bold;
@@ -287,8 +268,6 @@ $result = mysqli_query($conn, $query);
             color: #2e7d32;
             text-decoration: underline;
         }
-    
-        /* Existing styles omitted for brevity */
         .delete-button {
             background-color: #ff4d4d;
             color: white;
@@ -305,23 +284,20 @@ $result = mysqli_query($conn, $query);
     <script>
         function confirmDeletion(bookingId) {
             if (confirm("Are you sure you want to delete this booking?")) {
-                // Create a hidden form to submit the delete request
+                // hidden form create korbe deletetion er jonno
                 const form = document.createElement("form");
                 form.method = "POST";
                 form.action = "";
-
                 const bookingIdInput = document.createElement("input");
                 bookingIdInput.type = "hidden";
                 bookingIdInput.name = "booking_id";
                 bookingIdInput.value = bookingId;
                 form.appendChild(bookingIdInput);
-
                 const deleteInput = document.createElement("input");
                 deleteInput.type = "hidden";
                 deleteInput.name = "delete";
                 deleteInput.value = "1";
                 form.appendChild(deleteInput);
-
                 document.body.appendChild(form);
                 form.submit();
             }
@@ -329,15 +305,13 @@ $result = mysqli_query($conn, $query);
     </script>
 </head>
 <body>
-  <!-- Header Section -->
+
 <div class="header">
-    <!-- Website Logo (Permanent Logo) -->
     <div class="website-logo">
-        <img src="images/oca.jpg" alt="Website Logo"> <!-- Permanent logo of the website -->
-         <!-- Optionally, you can add text if needed -->
+        <img src="images/oca.jpg" alt="Website Logo">
+        
     </div>
     
-    <!-- Navigation Links -->
     <nav>
         <a href="room_booking.php">Home</a>
         <a href="my_bookings.php">My Bookings</a>
@@ -345,8 +319,6 @@ $result = mysqli_query($conn, $query);
         <a href="#">Contact</a>
         <a href="logout.php">Logout</a>
     </nav>
-
-    <!-- Right Bar for Club Logo -->
     <div class="user-info">
         <span>Welcome,</span>
         <a href="club_profile.php">
@@ -360,12 +332,11 @@ $result = mysqli_query($conn, $query);
         </a>
     </div>
 </div>
-    <!-- Main Content -->
     <div class="container">
         <h1>Your Bookings</h1>
 
         <?php
-        // Check if there are any bookings
+        // club bookings table
         if (mysqli_num_rows($result) > 0) {
             echo "<table>";
             echo "<tr>
@@ -382,10 +353,8 @@ $result = mysqli_query($conn, $query);
                     <th>Action</th>
                   </tr>";
             
-            // Counter to keep track of serial number
             $serial_no = 1;
-
-            // Loop through the results and display them in the table
+            // database Loop 
             while ($row = mysqli_fetch_assoc($result)) {
                 $status_class = 'status ' . strtolower($row['status']);
                 echo "<tr>
@@ -399,7 +368,7 @@ $result = mysqli_query($conn, $query);
                         <td class='$status_class'>" . $row['status'] . "</td>
                         <td>" . $row['comments'] . "</td>";
 
-                // Add Budget Link if booking is approved
+                // Budget Link show korbe
                 if (in_array(strtolower($row['status']), ['budget', 'approved'])) {
                     echo "<td><a class='budget-link' href='budget_execute.php?booking_id=" . $row['booking_id'] . "'>Execute Budget</a></td>";
                 }

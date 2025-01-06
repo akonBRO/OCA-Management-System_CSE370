@@ -1,22 +1,19 @@
 <?php
 require_once('DBconnect.php');
-session_start(); // Start the session
-
-// Check if the user is logged in by verifying the session variables
+session_start();
 if (!isset($_SESSION['uname']) || !isset($_SESSION['uid'])) {
-    // If not logged in, redirect to the login page
     header("Location: index.html");
     exit();
 }
 
-// Handle the registration logic
+// registration form er jonno
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['register_event'])) {
-        $booking_id = $_POST['booking_id']; // Booking ID from the form
-        $uid = $_SESSION['uid']; // User ID from session
-        $uname = $_SESSION['uname']; // Username from session
-        $email = $_SESSION['umail']; // User email (assumed to be in the session)
-        $number = $_SESSION['umobile']; // User number (assumed to be in the session)
+        $booking_id = $_POST['booking_id']; 
+        $uid = $_SESSION['uid']; 
+        $uname = $_SESSION['uname']; 
+        $email = $_SESSION['umail'];
+        $number = $_SESSION['umobile'];
 
         // Insert or update the registration information in the database
         $sql = "INSERT INTO registered_std (uname, uid, email, number, booking_id) 
@@ -39,14 +36,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User Homepage</title>
     <style>
-        /* Add your existing styles here */
+      
         body {
             font-family: Arial, sans-serif;
             background: linear-gradient(to right, #74ebd5, #ACB6E5);
             margin: 0;
-            padding-top: 100px; /* Prevents content from being hidden under the header */
+            padding-top: 100px; 
             color: #333;
-            overflow-x: hidden; /* Prevents horizontal scrolling */
+            overflow-x: hidden; 
         }
 
         /* Header Styling */
@@ -56,12 +53,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             align-items: center;
             background-color: #2c3e50;
             color: white;
-            padding: 10px 20px; /* Adjusted padding for consistent spacing */
+            padding: 10px 20px;
             position: fixed;
             top: 0;
             left: 0;
-            width: 100%; /* Ensures the header spans the full width */
-            box-sizing: border-box; /* Includes padding in the width calculation */
+            width: 100%; 
+            box-sizing: border-box; 
             z-index: 1000;
             box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
         }
@@ -171,7 +168,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         table td:last-child, table th:last-child {
             border-right: none;
         }
-        /* Styling for the Register Button */
+        
 .register-btn {
     background-color:rgb(0, 151, 8); 
     color: white; 
@@ -183,7 +180,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     transition: background-color 0.3s ease, transform 0.3s ease; 
 }
 
-/* Hover effect for the Register Button */
 .register-btn:hover {
     background-color: #3498db; 
     transform: translateY(-3px);
@@ -226,12 +222,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <body>
     <!-- Header Section -->
     <div class="header">
-        <!-- Website Logo -->
+        
         <div class="website-logo">
             <img src="images/oca.jpg" alt="Website Logo"> 
         </div>
         
-        <!-- Navigation Links -->
         <nav>
             <a href="home.php">Home</a>
             <a href="show_clubs.php">Clubs</a>
@@ -239,8 +234,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <a href="#">Contact</a>
             <a href="logout.php">Logout</a>
         </nav>
-
-        <!-- User Info -->
         <div class="user-info">
             <span>Welcome,</span>
             <a href="user_profile.php">
@@ -273,8 +266,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </thead>
             <tbody>
                 <?php
-                require_once('DBconnect.php');
-
+// database theke bookings data table e ansi
                 $sql = "SELECT club_name, event_name, event_date, time_slot, room_number, event_details, std_reg, booking_id 
                         FROM bookings 
                         WHERE status = 'approved'  ORDER BY `event_date`";
@@ -293,7 +285,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         echo "<td>" . htmlspecialchars($row['room_number']) . "</td>";
                         echo "<td>" . htmlspecialchars($row['event_details']) . "</td>";
                         
-                        // Check if the event is open for registration
+                        // student registration open thakle -----
 if ($row['std_reg'] === 'Yes') {
     echo "<td>
             <form method='POST' action=''>

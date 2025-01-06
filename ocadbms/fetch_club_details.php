@@ -4,7 +4,7 @@ require_once('DBconnect.php');
 if (isset($_GET['club_id'])) {
     $club_id = (int)$_GET['club_id'];
 
-    // Fetch club details
+    // club details fetch korbe
     $club_query = "SELECT * FROM clubs WHERE `Club ID` = $club_id";
     $club_result = mysqli_query($conn, $club_query);
     $club = mysqli_fetch_assoc($club_result);

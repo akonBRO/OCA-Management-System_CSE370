@@ -1,14 +1,10 @@
 <?php
 require_once('DBconnect.php');
 session_start();
-
-// Check if the user is logged in
 if (!isset($_SESSION['club_id'])) {
     header("Location: index.html");
     exit();
 }
-
-// Fetch current club data
 $club_id = $_SESSION['club_id'];
 $query = "SELECT * FROM clubs WHERE `Club ID` = '$club_id'";
 $result = mysqli_query($conn, $query);
@@ -19,8 +15,6 @@ if (mysqli_num_rows($result) == 1) {
     echo "Error fetching club data.";
     exit();
 }
-
-// Handle form submission for updates
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $club_name = $_POST['club_name'];
     $advisor = $_POST['advisor'];
@@ -34,13 +28,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $achievements = $_POST['achievements'];
     $fullname= $_POST['fullname'];
 
-    // Handle logo upload
     if (isset($_FILES['club_logo']) && $_FILES['club_logo']['error'] == 0) {
         $target_dir = "images/";
         $target_file = $target_dir . basename($_FILES['club_logo']['name']);
         $file_type = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
 
-        // Validate file type and size
         if (in_array($file_type, ['jpg', 'jpeg', 'png', 'gif']) && $_FILES['club_logo']['size'] <= 2000000) {
             if (move_uploaded_file($_FILES['club_logo']['tmp_name'], $target_file)) {
                 $logo_path = $target_file;
@@ -53,7 +45,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             exit();
         }
     } else {
-        $logo_path = $club_data['Logo']; // Keep the existing logo if not updated
+        $logo_path = $club_data['Logo']; 
     }
 
     $update_query = "UPDATE clubs SET 
@@ -73,7 +65,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         WHERE `Club ID` = '$club_id'";
 
     if (mysqli_query($conn, $update_query)) {
-        header("Location: club_profile.php"); // Redirect to profile page
+        header("Location: club_profile.php");
         exit();
     } else {
         echo "Error updating club data.";
@@ -88,7 +80,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Club Profile</title>
     <style>
-        /* General Reset */
+     
         * {
             margin: 0;
             padding: 0;

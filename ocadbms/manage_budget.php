@@ -1,30 +1,28 @@
 <?php
 session_start();
 require_once('DBconnect.php');
-
-// Check if admin is logged in
 if (!isset($_SESSION['admin_id'])) {
-    header("Location: admin_login.php");
+    header("Location: login_admin.html");
     exit();
 }
 
-// Get booking_id from the GET request
 if (!isset($_GET['booking_id'])) {
     echo "Booking ID not provided!";
     exit();
 }
+
 $booking_id = mysqli_real_escape_string($conn, $_GET['booking_id']);
 
-// Fetch budget_items for the specific booking_id
+// budget items show korbe specific booking id er jonno
 $sqlItems = "SELECT * FROM budget_items WHERE booking_id = '$booking_id'";
 $resultItems = mysqli_query($conn, $sqlItems);
 
-// Fetch budget details for the specific booking_id
+// budget show korbe specific booking id er jonno
 $sqlBudget = "SELECT * FROM budget WHERE booking_id = '$booking_id'";
 $resultBudget = mysqli_query($conn, $sqlBudget);
 $budgetDetails = mysqli_fetch_assoc($resultBudget);
 
-// Fetch comments from bookings table
+// Fetch comments 
 $sqlComments = "SELECT comments FROM bookings WHERE booking_id = '$booking_id'";
 $resultComments = mysqli_query($conn, $sqlComments);
 $bookingComments = mysqli_fetch_assoc($resultComments)['comments'];
@@ -42,7 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $updateComments = "UPDATE bookings SET comments = '$newComments' WHERE booking_id = '$booking_id'";
     mysqli_query($conn, $updateComments);
 
-    // If budget status is 'accepted', update bookings status to 'approved'
+    // budget status is 'accepted' hoile update bookings status to 'approved'
     if ($newStatus === 'accepted') {
         $updateBookingStatus = "UPDATE bookings SET status = 'approved' WHERE booking_id = '$booking_id'";
         mysqli_query($conn, $updateBookingStatus);

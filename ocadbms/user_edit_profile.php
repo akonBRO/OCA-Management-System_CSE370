@@ -1,23 +1,22 @@
 <?php
 require_once('DBconnect.php');
-session_start(); // Start session
+session_start(); 
+if (!isset($_SESSION['uname']) || !isset($_SESSION['uid'])) {
+    header("Location: index.html");
+    exit();
+}
 
-// Get the User ID from session
 $user_id = (int)$_SESSION['uid'];
-
-// Fetch existing user details
 $query = "SELECT * FROM users WHERE uid = $user_id";
 $result = mysqli_query($conn, $query);
 
-// Check if user data exists
+
 if ($result && mysqli_num_rows($result) > 0) {
     $user_data = mysqli_fetch_assoc($result);
 } else {
     echo "No user found with the given User ID.";
     exit();
 }
-
-// Handle form submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $uname = mysqli_real_escape_string($conn, $_POST['uname']);
     $dob = mysqli_real_escape_string($conn, $_POST['dob']);
@@ -28,17 +27,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $address = mysqli_real_escape_string($conn, $_POST['address']);
     $social_links = mysqli_real_escape_string($conn, $_POST['social_links']);
     
-    // Optional: Update Profile Picture
     if (isset($_FILES['profile_pic']['name']) && $_FILES['profile_pic']['name'] !== '') {
         $target_dir = "images/";
         $target_file = $target_dir . basename($_FILES['profile_pic']['name']);
         move_uploaded_file($_FILES['profile_pic']['tmp_name'], $target_file);
         $profile_pic = $target_file;
     } else {
-        $profile_pic = $user_data['profile_pic']; // Use existing picture if not updated
+        $profile_pic = $user_data['profile_pic'];
     }
 
-    // Update query
+
     $update_query = "
         UPDATE users 
         SET 

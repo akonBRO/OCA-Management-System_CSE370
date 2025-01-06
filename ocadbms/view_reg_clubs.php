@@ -2,13 +2,12 @@
 session_start();
 require_once('DBconnect.php');
 
-// Check if admin is logged in
 if (!isset($_SESSION['admin_id'])) {
-    header("Location: admin_login.php");
+    header("Location: login_admin.html");
     exit();
 }
 
-// Fetch clubs based on search or all clubs
+// searching er jonno
 $search_club_id = isset($_GET['search_club_id']) ? $_GET['search_club_id'] : '';
 $search_club_name = isset($_GET['search_club_name']) ? $_GET['search_club_name'] : '';
 
@@ -20,7 +19,7 @@ if (isset($_GET['search'])) {
 $clubs = mysqli_query($conn, $query);
 
 
-// Update club information
+// Update club info
 if (isset($_POST['update_club'])) {
     $club_id = $_POST['club_id'];
     $club_name = $_POST['club_name'];
@@ -64,7 +63,6 @@ if (isset($_POST['update_club'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registered Clubs</title>
     <style>
-        /* Add your existing styles here */
         body {
         font-family: 'Arial', sans-serif;
         background-color: #f4f4f9;

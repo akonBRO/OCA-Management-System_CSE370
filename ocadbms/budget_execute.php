@@ -1,7 +1,6 @@
 <?php
 require_once('DBconnect.php');
 session_start();
-
 if (!isset($_SESSION['club_id']) || !isset($_SESSION['club_name'])) {
     header("Location: index.html");
     exit();
@@ -22,19 +21,18 @@ if (mysqli_num_rows($result) == 0) {
     echo "Booking not found or not approved.";
     exit();
 }
-
 $booking = mysqli_fetch_assoc($result);
 $event_name = $booking['event_name'];
 $club_name = $booking['club_name'];
 
-// Fetch the current budget status
+// current budget status
 $budget_status_query = "SELECT status FROM budget WHERE booking_id = $booking_id";
 $budget_status_result = mysqli_query($conn, $budget_status_query);
 
 if (mysqli_num_rows($budget_status_result) > 0) {
     $budget_status = mysqli_fetch_assoc($budget_status_result)['status'];
 } else {
-    $budget_status = 'pending'; // Default to 'pending' if no status is found
+    $budget_status = 'pending';
 }
 
 // Handle form submission for adding items
@@ -55,12 +53,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_item']) && $budge
 
 // Handle budget confirmation
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirm_budget']) && $budget_status === 'pending') {
-    // Calculate the total budget
+    // sum total budget
     $total_budget_query = "SELECT SUM(total_price) AS total FROM budget_items WHERE booking_id = $booking_id";
     $total_budget_result = mysqli_query($conn, $total_budget_query);
     $total_budget = mysqli_fetch_assoc($total_budget_result)['total'];
 
-    // Check if a row already exists for the same booking_id in the budget table
+    // already exist thakle
     $check_budget_query = "SELECT * FROM budget WHERE booking_id = $booking_id";
     $check_budget_result = mysqli_query($conn, $check_budget_query);
 
@@ -70,7 +68,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirm_budget']) && 
                                 SET total_budget = $total_budget, status = 'hold' 
                                 WHERE booking_id = $booking_id";
         if (mysqli_query($conn, $update_budget_query)) {
-            // Update the status in the bookings table to "Budget"
+            // error er jonno
             $update_status_query = "UPDATE bookings SET status = 'budget' WHERE booking_id = $booking_id";
             mysqli_query($conn, $update_status_query);
         } else {
@@ -81,7 +79,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirm_budget']) && 
         $insert_budget_query = "INSERT INTO budget (booking_id, club_name, total_budget, status) 
                                 VALUES ($booking_id, '$club_name', $total_budget, 'hold')";
         if (mysqli_query($conn, $insert_budget_query)) {
-            // Update the status in the bookings table to "Budget"
+            // error er jonno
             $update_status_query = "UPDATE bookings SET status = 'budget' WHERE booking_id = $booking_id";
             mysqli_query($conn, $update_status_query);
         } else {
@@ -104,7 +102,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['delete_item']) && $budg
     }
 }
 
-// Handle item update
+// item update
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_item']) && $budget_status === 'pending') {
     $item_id = intval($_POST['item_id']);
     $quantity = intval($_POST['quantity']);
@@ -135,10 +133,7 @@ $items_result = mysqli_query($conn, $items_query);
     <title>Execute Budget</title>
     <link rel="stylesheet" href="styles.css">
     <style>
-        /* Add your existing styles here */
-        /* styles.css */
-
-/* General Body and Layout */
+        
 body {
     font-family: 'Arial', sans-serif;
     background-color: #f4f7fc;
@@ -168,7 +163,6 @@ h3 {
     margin-bottom: 15px;
 }
 
-/* Form Styling */
 .add-item-form {
     background-color: #ffffff;
     border-radius: 8px;
@@ -199,7 +193,6 @@ h3 {
     background-color: #2980b9;
 }
 
-/* Table Styling */
 table {
     width: 100%;
     border-collapse: collapse;
@@ -228,7 +221,7 @@ table tr:hover {
     background-color: #f1f1f1;
 }
 
-/* Button for Back to Booking */
+
 .back-button {
     display: block;
     width: 200px;
@@ -246,9 +239,9 @@ table tr:hover {
 .back-button:hover {
     background-color: #27ae60;
 }
- /* Confirm Budget Button Styling */
+
 form button[type="submit"] {
-    background-color: #27ae60; /* Green color */
+    background-color: #27ae60;
     color: white;
     padding: 12px 20px;
     border: none;
@@ -260,10 +253,10 @@ form button[type="submit"] {
 }
 
 form button[type="submit"]:hover {
-    background-color: #2ecc71; /* Lighter green */
+    background-color: #2ecc71; 
 }
 
-/* Delete Button Styling */
+
 .delete-btn {
     color: #e74c3c;
     font-size: 1.1rem;
@@ -288,7 +281,7 @@ form button[type="submit"]:hover {
     text-decoration: underline;
 }
 
-/* Modal Styles */
+
 .modal {
     display: none;
     position: fixed;
@@ -330,9 +323,8 @@ form button[type="submit"]:hover {
     <div class="container">
         <h1>Execute Budget for Event: <?php echo htmlspecialchars($event_name); ?></h1>
         <h3>Booking ID: <?php echo $booking_id; ?></h3>
-        <h3>Budget Status: <?php echo ucfirst($budget_status); ?></h3> <!-- Show the budget status -->
+        <h3>Budget Status: <?php echo ucfirst($budget_status); ?></h3> 
 
-        <!-- Add Budget Item Form -->
         <?php if ($budget_status === 'pending') : ?>
             <form class="add-item-form" action="" method="POST">
                 <h3>Add Budget Item</h3>
@@ -368,7 +360,7 @@ form button[type="submit"]:hover {
                 <th>Unit Price</th>
                 <th>Total Price</th>
                 <?php if ($budget_status === 'pending') : ?>
-                    <th>Action</th> <!-- Added a new column for the delete button -->
+                    <th>Action</th>
                 <?php endif; ?>
             </tr>
 
@@ -407,7 +399,6 @@ form button[type="submit"]:hover {
             </form>
         <?php endif; ?>
 
-        <!-- Back to My Booking Button -->
         <a href="my_bookings.php" class="back-button">Back to My Booking</a>
     </div>
 

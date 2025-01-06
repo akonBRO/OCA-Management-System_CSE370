@@ -1,8 +1,6 @@
 <?php
 require_once('DBconnect.php');
 session_start();
-
-// Check if the user is logged in
 if (!isset($_SESSION['uname']) || !isset($_SESSION['uid'])) {
     header("Location: index.html");
     exit();
@@ -20,19 +18,18 @@ $clubs_result = mysqli_query($conn, $clubs_query);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registered Clubs</title>
     <style>
-        /* Header Styling */
     .header {
         display: flex;
         justify-content: space-between;
         align-items: center;
         background-color: #2c3e50;
         color: white;
-        padding: 10px 20px; /* Adjusted padding for consistent spacing */
+        padding: 10px 20px; 
         position: fixed;
         top: 0;
         left: 0;
-        width: 100%; /* Ensures the header spans the full width */
-        box-sizing: border-box; /* Includes padding in the width calculation */
+        width: 100%; 
+        box-sizing: border-box; 
         z-index: 1000;
         box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
     }
@@ -120,7 +117,7 @@ $clubs_result = mysqli_query($conn, $clubs_query);
             margin: 8px 0;
         }
     }
-        /* General styling */
+    
         body {
             font-family: 'Roboto', sans-serif;
             background: #f4f7fa;
@@ -143,7 +140,7 @@ $clubs_result = mysqli_query($conn, $clubs_query);
             padding: 40px;
         }
 
-        /* Club Card Styling */
+
         .club-card {
             background-color: white;
             border-radius: 15px;
@@ -204,7 +201,6 @@ $clubs_result = mysqli_query($conn, $clubs_query);
             transform: translateY(-2px);
         }
 
-        /* Modal Styling */
         .modal {
             display: none;
             position: fixed;
@@ -255,7 +251,7 @@ $clubs_result = mysqli_query($conn, $clubs_query);
             const modal = document.getElementById('club-modal');
             modal.style.display = 'flex';
 
-            // Fetch detailed club info via AJAX
+            // club profile show korar jonno
             fetch(`fetch_club_details.php?club_id=${clubId}`)
                 .then(response => response.text())
                 .then(data => {
@@ -272,13 +268,11 @@ $clubs_result = mysqli_query($conn, $clubs_query);
 <body>
     <!-- Header Section -->
 <div class="header">
-    <!-- Website Logo (Permanent Logo) -->
-    <div class="website-logo">
-        <img src="images/oca.jpg" alt="Website Logo"> <!-- Permanent logo of the website -->
-         <!-- Optionally, you can add text if needed -->
-    </div>
     
-    <!-- Navigation Links -->
+    <div class="website-logo">
+        <img src="images/oca.jpg" alt="Website Logo"> 
+        
+    </div>
     <nav>
             <a href="home.php">Home</a>
             <a href="show_clubs.php">Clubs</a>
@@ -286,8 +280,6 @@ $clubs_result = mysqli_query($conn, $clubs_query);
             <a href="#">Contact</a>
             <a href="logout.php">Logout</a>
         </nav>
-
-    <!-- Right Bar for Club Logo -->
     <div class="user-info">
         <span>Welcome,</span>
         <a href="user_profile.php">
