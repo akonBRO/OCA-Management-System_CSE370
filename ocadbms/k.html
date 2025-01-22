@@ -53,7 +53,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_item']) && $budge
     }
 }
 
-// Handle budget confirmation
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirm_budget']) && $budget_status === 'pending') {
     // Calculate the total budget
     $total_budget_query = "SELECT SUM(total_price) AS total FROM budget_items WHERE booking_id = $booking_id";
@@ -89,7 +88,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirm_budget']) && 
         }
     }
 }
-// Handle item deletion
+
 if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['delete_item']) && $budget_status === 'pending') {
     $item_id = intval($_GET['delete_item']);
     
@@ -103,7 +102,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['delete_item']) && $budg
     }
 }
 
-// Fetch budget items for this booking
+
 $items_query = "SELECT * FROM budget_items WHERE booking_id = $booking_id";
 $items_result = mysqli_query($conn, $items_query);
 ?>
@@ -206,7 +205,6 @@ table tr:hover {
     background-color: #f1f1f1;
 }
 
-/* Button for Back to Booking */
 .back-button {
     display: block;
     width: 200px;
@@ -224,9 +222,9 @@ table tr:hover {
 .back-button:hover {
     background-color: #27ae60;
 }
-/* Confirm Budget Button Styling */
+
 form button[type="submit"] {
-    background-color: #27ae60; /* Green color */
+    background-color: #27ae60;
     color: white;
     padding: 12px 20px;
     border: none;
@@ -238,10 +236,10 @@ form button[type="submit"] {
 }
 
 form button[type="submit"]:hover {
-    background-color: #2ecc71; /* Lighter green */
+    background-color: #2ecc71;
 }
 
-/* Delete Button Styling */
+
 .delete-btn {
     color: #e74c3c;
     font-size: 1.5rem;
@@ -261,9 +259,9 @@ form button[type="submit"]:hover {
     <div class="container">
         <h1>Execute Budget for Event: <?php echo htmlspecialchars($event_name); ?></h1>
         <h3>Booking ID: <?php echo $booking_id; ?></h3>
-        <h3>Budget Status: <?php echo ucfirst($budget_status); ?></h3> <!-- Show the budget status -->
+        <h3>Budget Status: <?php echo ucfirst($budget_status); ?></h3>
 
-        <!-- Add Budget Item Form -->
+       
         <?php if ($budget_status === 'pending') : ?>
             <form class="add-item-form" action="" method="POST">
                 <h3>Add Budget Item</h3>
