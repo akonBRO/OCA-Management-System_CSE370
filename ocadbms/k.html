@@ -76,7 +76,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirm_budget']) && 
             echo "Error: " . mysqli_error($conn);
         }
     } else {
-        // Insert a new row in the budget table if it doesn't exist
+       
         $insert_budget_query = "INSERT INTO budget (booking_id, club_name, total_budget, status) 
                                 VALUES ($booking_id, '$club_name', $total_budget, 'hold')";
         if (mysqli_query($conn, $insert_budget_query)) {
